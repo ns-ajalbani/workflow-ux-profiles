@@ -12,6 +12,7 @@ interface ProfilesTableProps {
   pageSize: number
   sortField: SortField
   sortDirection: 'asc' | 'desc'
+  isLoading?: boolean
   onSort: (field: SortField) => void
   onPageChange: (page: number) => void
   onPageSizeChange: (size: number) => void
@@ -27,6 +28,7 @@ export default function ProfilesTable({
   pageSize,
   sortField,
   sortDirection,
+  isLoading = false,
   onSort,
   onPageChange,
   onPageSizeChange,
@@ -60,7 +62,11 @@ export default function ProfilesTable({
             </tr>
           </thead>
           <tbody>
-            {paginatedProfiles.length > 0 ? (
+            {isLoading ? (
+              <tr className="loading-row">
+                <td colSpan={5}>Loading...</td>
+              </tr>
+            ) : paginatedProfiles.length > 0 ? (
               paginatedProfiles.map(profile => (
                 <tr key={profile.id}>
                   <td>{profile.name}</td>
