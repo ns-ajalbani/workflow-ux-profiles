@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { MatchRule } from '../MatchLogic'
-import MatchLogic from '../MatchLogic'
+import type { MatchRule } from '../../MatchLogic'
+import MatchLogic from '../../MatchLogic'
 
 interface CustomCategoriesFormProps {
   onNavigateToProfile: (type: string) => void

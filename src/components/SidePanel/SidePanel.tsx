@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import profileTypesData from '../data/profileTypes.json'
-import { TYPE_ICONS, TYPE_COLORS } from './typeConfig'
-import FingerprintRulesForm from './forms/FingerprintRulesForm'
-import MalwareDetectionForm from './forms/MalwareDetectionForm'
-import DestinationForm from './forms/DestinationForm'
-import UrlListsForm from './forms/UrlListsForm'
-import CustomCategoriesForm from './forms/CustomCategoriesForm'
+import profileTypesData from '../../data/profileTypes.json'
+import { TYPE_ICONS, TYPE_COLORS } from '../typeConfig'
+import FingerprintRulesForm from '../forms/FingerprintRulesForm'
+import MalwareDetectionForm from '../forms/MalwareDetectionForm'
+import DestinationForm from '../forms/DestinationForm'
+import UrlListsForm from '../forms/UrlListsForm'
+import CustomCategoriesForm from '../forms/CustomCategoriesForm'
 
 const TYPE_TOOLTIPS: Record<string, string> = {
   DLP: 'Protect sensitive data from unauthorized access, sharing, or exfiltration across cloud and web channels.',

@@ -1,17 +1,15 @@
-import type { Profile, SortField } from './Profiles'
-import { TYPE_ICONS, TYPE_COLORS } from './typeConfig'
+import type { Profile, SortField } from '../Profiles'
+import { TYPE_ICONS, TYPE_COLORS } from '../typeConfig'
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
 
 const formatDate = (dateString: string): string => {
   try {
-    const date = new Date(dateString)
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0')
-    const day = String(date.getUTCDate()).padStart(2, '0')
-    const year = String(date.getUTCFullYear()).slice(-2)
-    const hours = String(date.getUTCHours()).padStart(2, '0')
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0')
-    return `${month}/${day}/${year} ${hours}:${minutes}`
+    const [datePart, timePart] = dateString.split('T')
+    const [year, month, day] = datePart.split('-')
+    const timeWithoutSeconds = timePart.split(':').slice(0, 2).join(':')
+    const shortYear = year.slice(-2)
+    return `${month}/${day}/${shortYear} ${timeWithoutSeconds}`
   } catch {
     return dateString
   }

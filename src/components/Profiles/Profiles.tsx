@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import ProfilesFilter from './ProfilesFilter'
-import ProfilesTable from './ProfilesTable'
-import SidePanel from './SidePanel'
-import { fetchProfiles } from '../api/mockApi'
+import ProfilesFilter from '../ProfilesFilter'
+import ProfilesTable from '../ProfilesTable'
+import SidePanel from '../SidePanel'
+import { fetchProfiles } from '../../api/mockApi'
 import './Profiles.css'
 
 export interface Profile {

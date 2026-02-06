@@ -1,4 +1,4 @@
-import profileTypesData from '../data/profileTypes.json'
+import profileTypesData from '../../data/profileTypes.json'
 
 interface ProfilesFilterProps {
   selectedType: string
