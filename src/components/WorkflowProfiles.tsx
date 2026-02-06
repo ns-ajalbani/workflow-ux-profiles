@@ -50,7 +50,7 @@ export default function WorkflowProfiles({ onSelectProfile }: WorkflowProfilesPr
       profiles.map(p => ({
         ...p,
         isActive: p.id === profile.id,
-      }))
+      })),
     )
     onSelectProfile?.(profile)
   }
@@ -59,7 +59,9 @@ export default function WorkflowProfiles({ onSelectProfile }: WorkflowProfilesPr
     <div className="workflow-profiles">
       <div className="profiles-header">
         <h2>Workflow Profiles</h2>
-        <p className="profiles-description">Select a workflow profile to define your approval process</p>
+        <p className="profiles-description">
+          Select a workflow profile to define your approval process
+        </p>
       </div>
 
       <div className="profiles-grid">
@@ -70,7 +72,7 @@ export default function WorkflowProfiles({ onSelectProfile }: WorkflowProfilesPr
             onClick={() => handleSelectProfile(profile)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 handleSelectProfile(profile)
               }

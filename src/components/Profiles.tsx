@@ -13,7 +13,6 @@ interface Profile {
   created: string
 }
 
-
 const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
 
 type SortField = 'name' | 'type' | 'subtype' | 'category' | 'created'
@@ -46,8 +45,8 @@ export default function Profiles() {
   const [, setMatchRules] = useState<MatchRule[]>([])
   const [malwareScanSelections, setMalwareScanSelections] = useState<Record<string, string[]>>({
     'Netskope File Scanner': [],
-    'Allowlist': [],
-    'Blocklist': [],
+    Allowlist: [],
+    Blocklist: [],
   })
   const [expandedMalwareGroup, setExpandedMalwareGroup] = useState<string | null>(null)
 
@@ -183,7 +182,7 @@ export default function Profiles() {
   ])
 
   const filteredProfiles = useMemo(() => {
-    let filtered = profiles.filter(profile => {
+    const filtered = profiles.filter(profile => {
       const matchesType = !selectedType || profile.type === selectedType
       const matchesSubtype = !selectedSubtype || profile.subtype === selectedSubtype
       const matchesCategory = !selectedCategory || profile.category === selectedCategory
@@ -229,7 +228,15 @@ export default function Profiles() {
     })
 
     return sorted
-  }, [profiles, selectedType, selectedSubtype, selectedCategory, searchTerm, sortField, sortDirection])
+  }, [
+    profiles,
+    selectedType,
+    selectedSubtype,
+    selectedCategory,
+    searchTerm,
+    sortField,
+    sortDirection,
+  ])
 
   const totalPages = Math.ceil(filteredProfiles.length / pageSize)
   const startIndex = (currentPage - 1) * pageSize
@@ -320,7 +327,9 @@ export default function Profiles() {
         threshold: threshold,
       })
       // TODO: Add profile creation logic here
-      alert(`Profile created!\nType: ${selectedProfileType}\nSubtype: ${selectedProfileSubtype}\nRule Name: ${ruleName}\nThreshold: ${threshold}%`)
+      alert(
+        `Profile created!\nType: ${selectedProfileType}\nSubtype: ${selectedProfileSubtype}\nRule Name: ${ruleName}\nThreshold: ${threshold}%`,
+      )
       setIsPanelOpen(false)
     }
   }
@@ -335,7 +344,7 @@ export default function Profiles() {
     setCategoryName('')
     setCategoryDescription('')
     setMatchRules([])
-    setMalwareScanSelections({ 'Netskope File Scanner': [], 'Allowlist': [], 'Blocklist': [] })
+    setMalwareScanSelections({ 'Netskope File Scanner': [], Allowlist: [], Blocklist: [] })
     setExpandedMalwareGroup(null)
   }
 
@@ -371,8 +380,8 @@ export default function Profiles() {
 
   const malwareGroupOptions: Record<string, string[]> = {
     'Netskope File Scanner': ['Default Malware Scan'],
-    'Allowlist': ['File Hash Allowlist', 'File Name Allowlist', 'Certificate Allowlist'],
-    'Blocklist': ['File Hash Blocklist', 'File Name Blocklist', 'URL Blocklist'],
+    Allowlist: ['File Hash Allowlist', 'File Name Allowlist', 'Certificate Allowlist'],
+    Blocklist: ['File Hash Blocklist', 'File Name Blocklist', 'URL Blocklist'],
   }
 
   const handleMalwareToggle = (group: string, value: string) => {
@@ -607,14 +616,25 @@ export default function Profiles() {
 
       {/* Side Panel Overlay */}
       {isPanelOpen && (
-        <div className="side-panel-overlay" onClick={handleClosePanel} />
+        <div
+          className="side-panel-overlay"
+          role="button"
+          tabIndex={0}
+          aria-label="Close panel"
+          onClick={handleClosePanel}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') handleClosePanel()
+          }}
+        />
       )}
 
       {/* Side Panel */}
       <div className={`side-panel ${isPanelOpen ? 'open' : ''}`}>
         <div className="side-panel-header">
           <h3>Create New Profile</h3>
-          <button className="close-btn" onClick={handleClosePanel}>×</button>
+          <button className="close-btn" onClick={handleClosePanel}>
+            ×
+          </button>
         </div>
 
         <div className="side-panel-content">
@@ -638,8 +658,12 @@ export default function Profiles() {
 
           {creationStep === 'subtype' && currentTypeObject && (
             <div className="step-content">
-              <button className="back-btn" onClick={handleBackStep}>← Back</button>
-              <p className="step-title">Profile Type: <strong>{selectedProfileType}</strong></p>
+              <button className="back-btn" onClick={handleBackStep}>
+                ← Back
+              </button>
+              <p className="step-title">
+                Profile Type: <strong>{selectedProfileType}</strong>
+              </p>
               <p className="step-description">Select a subtype:</p>
               <div className="subtype-options">
                 {availableSubtypes.map(subtype => (
@@ -657,15 +681,18 @@ export default function Profiles() {
 
           {creationStep === 'complete' && (
             <div className="step-content">
-              <button className="back-btn" onClick={handleBackStep}>← Back</button>
+              <button className="back-btn" onClick={handleBackStep}>
+                ← Back
+              </button>
               <div className="profile-info">
-                <p className="info-label">Profile Type: <strong>{selectedProfileType}</strong></p>
-                <p className="info-label">Subtype: <strong>{selectedProfileSubtype}</strong></p>
+                <p className="info-label">
+                  Profile Type: <strong>{selectedProfileType}</strong>
+                </p>
+                <p className="info-label">
+                  Subtype: <strong>{selectedProfileSubtype}</strong>
+                </p>
               </div>
-              <button
-                className="create-btn"
-                onClick={handleNextToConfiguration}
-              >
+              <button className="create-btn" onClick={handleNextToConfiguration}>
                 Next
               </button>
             </div>
@@ -673,11 +700,17 @@ export default function Profiles() {
 
           {creationStep === 'configure' && (
             <div className="step-content">
-              <button className="back-btn" onClick={handleBackStep}>← Back</button>
+              <button className="back-btn" onClick={handleBackStep}>
+                ← Back
+              </button>
               <div className="profile-info">
-                <p className="info-label">Profile Type: <strong>{selectedProfileType}</strong></p>
+                <p className="info-label">
+                  Profile Type: <strong>{selectedProfileType}</strong>
+                </p>
                 {selectedProfileSubtype !== 'N/A' && (
-                  <p className="info-label">Subtype: <strong>{selectedProfileSubtype}</strong></p>
+                  <p className="info-label">
+                    Subtype: <strong>{selectedProfileSubtype}</strong>
+                  </p>
                 )}
               </div>
 
@@ -697,9 +730,7 @@ export default function Profiles() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="threshold">
-                      Threshold ({threshold}%)
-                    </label>
+                    <label htmlFor="threshold">Threshold ({threshold}%)</label>
                     <div className="threshold-info">
                       <span>70%</span>
                       <input
@@ -715,7 +746,8 @@ export default function Profiles() {
                       <span>100%</span>
                     </div>
                     <p className="threshold-help">
-                      The recommended default is 70%. Higher values mean stricter matching, while lower values may generate false positives.
+                      The recommended default is 70%. Higher values mean stricter matching, while
+                      lower values may generate false positives.
                     </p>
                   </div>
 
@@ -730,76 +762,81 @@ export default function Profiles() {
               )}
 
               {/* Threat Protection > Malware Detection Form */}
-              {selectedProfileType === 'Threat Protection' && selectedProfileSubtype === 'Malware Detection' && (
-                <div className="form-section">
-                  <div className="form-group">
-                    <label htmlFor="profile-name">Profile Name</label>
-                    <input
-                      id="profile-name"
-                      type="text"
-                      placeholder="Enter profile name"
-                      value={ruleName}
-                      onChange={e => setRuleName(e.target.value)}
-                      className="form-input"
-                    />
-                  </div>
+              {selectedProfileType === 'Threat Protection' &&
+                selectedProfileSubtype === 'Malware Detection' && (
+                  <div className="form-section">
+                    <div className="form-group">
+                      <label htmlFor="profile-name">Profile Name</label>
+                      <input
+                        id="profile-name"
+                        type="text"
+                        placeholder="Enter profile name"
+                        value={ruleName}
+                        onChange={e => setRuleName(e.target.value)}
+                        className="form-input"
+                      />
+                    </div>
 
-                  {Object.entries(malwareGroupOptions).map(([group, options]) => {
-                    const selected = malwareScanSelections[group] || []
-                    const isExpanded = expandedMalwareGroup === group
+                    {Object.entries(malwareGroupOptions).map(([group, options]) => {
+                      const selected = malwareScanSelections[group] || []
+                      const isExpanded = expandedMalwareGroup === group
 
-                    return (
-                      <fieldset key={group} className="form-fieldset">
-                        <legend className="form-fieldset-legend">{group}</legend>
-                        <button
-                          type="button"
-                          className="dropdown-checkbox-btn"
-                          onClick={() => setExpandedMalwareGroup(isExpanded ? null : group)}
-                        >
-                          {selected.length > 0 ? (
-                            <span className="dropdown-checkbox-count">{selected.length} selected</span>
-                          ) : (
-                            <span className="dropdown-checkbox-placeholder">Select</span>
-                          )}
-                          <span className={`dropdown-checkbox-arrow ${isExpanded ? 'open' : ''}`}>&#9660;</span>
-                        </button>
-                        {isExpanded && (
-                          <div className="dropdown-checkbox-panel">
-                            {group !== 'Netskope File Scanner' && (
-                              <label className="dropdown-checkbox-option dropdown-checkbox-select-all">
-                                <input
-                                  type="checkbox"
-                                  checked={selected.length === options.length}
-                                  onChange={() => handleMalwareSelectAll(group)}
-                                />
-                                <span>Select All ({options.length})</span>
-                              </label>
+                      return (
+                        <fieldset key={group} className="form-fieldset">
+                          <legend className="form-fieldset-legend">{group}</legend>
+                          <button
+                            type="button"
+                            className="dropdown-checkbox-btn"
+                            onClick={() => setExpandedMalwareGroup(isExpanded ? null : group)}
+                          >
+                            {selected.length > 0 ? (
+                              <span className="dropdown-checkbox-count">
+                                {selected.length} selected
+                              </span>
+                            ) : (
+                              <span className="dropdown-checkbox-placeholder">Select</span>
                             )}
-                            {options.map(option => (
-                              <label key={option} className="dropdown-checkbox-option">
-                                <input
-                                  type="checkbox"
-                                  checked={selected.includes(option)}
-                                  onChange={() => handleMalwareToggle(group, option)}
-                                />
-                                <span>{option}</span>
-                              </label>
-                            ))}
-                          </div>
-                        )}
-                      </fieldset>
-                    )
-                  })}
+                            <span className={`dropdown-checkbox-arrow ${isExpanded ? 'open' : ''}`}>
+                              &#9660;
+                            </span>
+                          </button>
+                          {isExpanded && (
+                            <div className="dropdown-checkbox-panel">
+                              {group !== 'Netskope File Scanner' && (
+                                <label className="dropdown-checkbox-option dropdown-checkbox-select-all">
+                                  <input
+                                    type="checkbox"
+                                    checked={selected.length === options.length}
+                                    onChange={() => handleMalwareSelectAll(group)}
+                                  />
+                                  <span>Select All ({options.length})</span>
+                                </label>
+                              )}
+                              {options.map(option => (
+                                <label key={option} className="dropdown-checkbox-option">
+                                  <input
+                                    type="checkbox"
+                                    checked={selected.includes(option)}
+                                    onChange={() => handleMalwareToggle(group, option)}
+                                  />
+                                  <span>{option}</span>
+                                </label>
+                              ))}
+                            </div>
+                          )}
+                        </fieldset>
+                      )
+                    })}
 
-                  <button
-                    className="create-btn"
-                    onClick={handleCreateProfile}
-                    disabled={!ruleName.trim()}
-                  >
-                    Create Profile
-                  </button>
-                </div>
-              )}
+                    <button
+                      className="create-btn"
+                      onClick={handleCreateProfile}
+                      disabled={!ruleName.trim()}
+                    >
+                      Create Profile
+                    </button>
+                  </div>
+                )}
 
               {/* Custom Categories Form */}
               {selectedProfileType === 'Custom Categories' && (

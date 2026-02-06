@@ -50,7 +50,12 @@ const URL_LISTS = [
   'test_policy_weburl1689568717',
 ]
 
-const URL_PROFILE_OPTIONS = [
+interface ProfileOption {
+  name: string
+  type: string
+}
+
+const URL_PROFILE_OPTIONS: ProfileOption[] = [
   ...DESTINATION_PROFILES.map(p => ({ name: p, type: 'Destination' })),
   ...URL_LISTS.map(p => ({ name: p, type: 'URL List' })),
 ]
@@ -63,11 +68,13 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
   ])
 
   const [expandedRuleId, setExpandedRuleId] = useState<string | null>(null)
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(['Destination Profiles', 'URL Lists (to be deprecated)', 'Categories']))
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
+    new Set(['Destination Profiles', 'URL Lists (to be deprecated)', 'Categories']),
+  )
 
   const handleRuleChange = (id: string, field: 'operator' | 'field', newValue: string) => {
     const updatedRules = rules.map(rule =>
-      rule.id === id ? { ...rule, [field]: newValue, selectedValues: [] } : rule
+      rule.id === id ? { ...rule, [field]: newValue, selectedValues: [] } : rule,
     )
     setRules(updatedRules)
     onRulesChange?.(updatedRules)
@@ -98,7 +105,7 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
     if (rule.field === 'Category') {
       allOptions = CATEGORY_OPTIONS
     } else {
-      allOptions = URL_PROFILE_OPTIONS.map((o: any) => o.name)
+      allOptions = URL_PROFILE_OPTIONS.map((o: ProfileOption) => o.name)
     }
 
     const updatedRules = rules.map(r => {
@@ -161,11 +168,11 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
     return [
       {
         group: 'Destination Profiles',
-        items: options.filter((o: any) => o.type === 'Destination'),
+        items: options.filter((o: ProfileOption) => o.type === 'Destination'),
       },
       {
         group: 'URL Lists (to be deprecated)',
-        items: options.filter((o: any) => o.type === 'URL List'),
+        items: options.filter((o: ProfileOption) => o.type === 'URL List'),
       },
     ]
   }
@@ -173,9 +180,10 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
   return (
     <div className="match-logic">
       <div className="match-logic-header">
-        <label className="definition-label">Definition</label>
+        <span className="definition-label">Definition</span>
         <p className="definition-help">
-          Define matching rules using AND/OR operators. The OR operator is applied to multiple selections within a single criterion.
+          Define matching rules using AND/OR operators. The OR operator is applied to multiple
+          selections within a single criterion.
         </p>
       </div>
 
@@ -209,9 +217,7 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
                     onClick={() => setExpandedRuleId(isExpanded ? null : rule.id)}
                   >
                     {rule.selectedValues.length > 0 ? (
-                      <span className="selected-count">
-                        {rule.selectedValues.length} selected
-                      </span>
+                      <span className="selected-count">{rule.selectedValues.length} selected</span>
                     ) : (
                       <span className="select-placeholder">Select</span>
                     )}
@@ -255,14 +261,24 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
                       <div key={group.group} className="option-group">
                         <div className="group-header">
                           <span
+                            role="button"
+                            tabIndex={0}
                             className={`group-arrow ${expandedGroups.has(group.group) ? 'open' : ''}`}
                             onClick={() => toggleGroup(group.group)}
+                            onKeyDown={e => {
+                              if (e.key === 'Enter' || e.key === ' ') toggleGroup(group.group)
+                            }}
                           >
                             ▶
                           </span>
                           <span
+                            role="button"
+                            tabIndex={0}
                             className="group-title"
                             onClick={() => toggleGroup(group.group)}
+                            onKeyDown={e => {
+                              if (e.key === 'Enter' || e.key === ' ') toggleGroup(group.group)
+                            }}
                           >
                             {group.group}
                           </span>
@@ -283,7 +299,7 @@ export default function MatchLogic({ onRulesChange, onNavigateToProfile }: Match
                         </div>
                         {expandedGroups.has(group.group) && (
                           <div className="group-items">
-                            {group.items.map((option: any) => (
+                            {group.items.map((option: ProfileOption) => (
                               <label key={option.name} className="option-checkbox">
                                 <input
                                   type="checkbox"

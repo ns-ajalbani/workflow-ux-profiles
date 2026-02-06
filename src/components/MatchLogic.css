@@ -171,7 +171,7 @@
   color: #333;
 }
 
-.select-all-checkbox input[type="checkbox"] {
+.select-all-checkbox input[type='checkbox'] {
   cursor: pointer;
   width: 18px;
   height: 18px;
@@ -186,8 +186,8 @@
   flex-shrink: 0;
 }
 
-.select-all-checkbox input[type="checkbox"]::before {
-  content: "";
+.select-all-checkbox input[type='checkbox']::before {
+  content: '';
   width: 11px;
   height: 11px;
   transform: scale(0);
@@ -196,12 +196,12 @@
   background: white;
 }
 
-.select-all-checkbox input[type="checkbox"]:checked {
+.select-all-checkbox input[type='checkbox']:checked {
   background: #0066cc;
   border-color: #0066cc;
 }
 
-.select-all-checkbox input[type="checkbox"]:checked::before {
+.select-all-checkbox input[type='checkbox']:checked::before {
   transform: scale(1);
 }
 
@@ -313,7 +313,7 @@
   background: #f5f5f5;
 }
 
-.option-checkbox input[type="checkbox"] {
+.option-checkbox input[type='checkbox'] {
   cursor: pointer;
   width: 16px;
   height: 16px;
@@ -328,8 +328,8 @@
   flex-shrink: 0;
 }
 
-.option-checkbox input[type="checkbox"]::before {
-  content: "";
+.option-checkbox input[type='checkbox']::before {
+  content: '';
   width: 10px;
   height: 10px;
   transform: scale(0);
@@ -338,12 +338,12 @@
   background: white;
 }
 
-.option-checkbox input[type="checkbox"]:checked {
+.option-checkbox input[type='checkbox']:checked {
   background: #0066cc;
   border-color: #0066cc;
 }
 
-.option-checkbox input[type="checkbox"]:checked::before {
+.option-checkbox input[type='checkbox']:checked::before {
   transform: scale(1);
 }
 

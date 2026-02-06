@@ -717,7 +717,7 @@
   background: #f0f6ff;
 }
 
-.dropdown-checkbox-option input[type="checkbox"] {
+.dropdown-checkbox-option input[type='checkbox'] {
   width: 16px;
   height: 16px;
   accent-color: #0066cc;
@@ -732,8 +732,8 @@
   flex-shrink: 0;
 }
 
-.dropdown-checkbox-option input[type="checkbox"]::before {
-  content: "";
+.dropdown-checkbox-option input[type='checkbox']::before {
+  content: '';
   width: 10px;
   height: 10px;
   transform: scale(0);
@@ -742,12 +742,12 @@
   background: white;
 }
 
-.dropdown-checkbox-option input[type="checkbox"]:checked {
+.dropdown-checkbox-option input[type='checkbox']:checked {
   background: #0066cc;
   border-color: #0066cc;
 }
 
-.dropdown-checkbox-option input[type="checkbox"]:checked::before {
+.dropdown-checkbox-option input[type='checkbox']:checked::before {
   transform: scale(1);
 }
 

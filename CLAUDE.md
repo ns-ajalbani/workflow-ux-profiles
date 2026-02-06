@@ -25,6 +25,7 @@ npm run lint
 ## Architecture & Key Details
 
 ### Build Tooling
+
 - **Vite** (`vite@7.2.4`): Modern build tool with fast dev server and optimized builds
 - **React Plugin** (`@vitejs/plugin-react@5.1.1`): Uses Babel/oxc for Fast Refresh during development
 - **TypeScript** (`typescript@5.9.3`): Strict mode enabled with comprehensive type checking
@@ -32,6 +33,7 @@ npm run lint
 ### TypeScript Configuration
 
 **`tsconfig.app.json`** (for source code):
+
 - Target: `ES2022`
 - Strict mode enabled with aggressive flags:
   - `noUnusedLocals` and `noUnusedParameters` prevent unused code
@@ -44,6 +46,7 @@ npm run lint
 ### ESLint
 
 ESLint is configured via `eslint.config.js` with:
+
 - React Hooks rules via `eslint-plugin-react-hooks`
 - React Refresh rules to prevent issues with hot module replacement
 - TypeScript support via `typescript-eslint`
