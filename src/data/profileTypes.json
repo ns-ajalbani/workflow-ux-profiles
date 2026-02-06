@@ -1,0 +1,145 @@
+{
+  "profileTypes": [
+    {
+      "id": "dlp",
+      "name": "DLP",
+      "description": "Data Loss Prevention profiles for sensitive data detection",
+      "subtypes": [
+        "DLP Profiles",
+        "DLP Rules",
+        "Fingerprint Rules",
+        "File Classifiers"
+      ]
+    },
+    {
+      "id": "threat_protection",
+      "name": "Threat Protection",
+      "description": "Profiles for detecting and preventing security threats",
+      "subtypes": [
+        "Malware Detection",
+        "Remediation"
+      ]
+    },
+    {
+      "id": "custom_categories",
+      "name": "Custom Categories",
+      "description": "Custom application and content categories",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "url_lists",
+      "name": "URL Lists",
+      "description": "URL filtering and management profiles",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "destination",
+      "name": "Destination",
+      "description": "Destination-based routing and policy profiles",
+      "subtypes": [
+        "Exact",
+        "Regex"
+      ]
+    },
+    {
+      "id": "app_instance",
+      "name": "App Instance",
+      "description": "Application instance configuration profiles",
+      "subtypes": [
+        "New App",
+        "From SkopeIT"
+      ]
+    },
+    {
+      "id": "http_header",
+      "name": "HTTP Header",
+      "description": "HTTP header-based policy profiles",
+      "subtypes": [
+        "Request",
+        "Response"
+      ]
+    },
+    {
+      "id": "connected_app_plugin",
+      "name": "Connected App/Plugin",
+      "description": "Third-party integration and plugin profiles",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "domain",
+      "name": "Domain",
+      "description": "Domain-based configuration profiles",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "user",
+      "name": "User",
+      "description": "User role and permission profiles",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "file",
+      "name": "File",
+      "description": "File type and handling profiles",
+      "subtypes": [
+        "Name/Extension",
+        "File Type",
+        "File Hash",
+        "Object ID"
+      ]
+    },
+    {
+      "id": "constraint",
+      "name": "Constraint",
+      "description": "Constraint and limitation profiles",
+      "subtypes": [
+        "Users",
+        "Storage"
+      ]
+    },
+    {
+      "id": "quarantine",
+      "name": "Quarantine",
+      "description": "Quarantine and isolation profiles",
+      "subtypes": [
+        "Quarantine Profile",
+        "Custom Tombstone"
+      ]
+    },
+    {
+      "id": "legal_hold",
+      "name": "Legal Hold",
+      "description": "Legal hold and retention profiles",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "forensic",
+      "name": "Forensic",
+      "description": "Forensic logging and audit profiles",
+      "subtypes": [
+        "N/A"
+      ]
+    },
+    {
+      "id": "network_location",
+      "name": "Network Location",
+      "description": "Network Location profiles",
+      "subtypes": [
+        "Single Object",
+        "Multiple Object"
+      ]
+    }
+  ]
+}
