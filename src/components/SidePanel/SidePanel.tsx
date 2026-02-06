@@ -38,7 +38,7 @@ const TYPE_TOOLTIPS: Record<string, string> = {
     'Manage third-party apps and plugins connected to your sanctioned cloud services.',
 }
 
-type CreationStep = 'type' | 'subtype' | 'complete' | 'configure'
+type CreationStep = 'type' | 'subtype' | 'configure'
 
 interface SidePanelProps {
   isOpen: boolean
@@ -67,7 +67,7 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
 
     if (typeObj?.subtypes.length === 1 && typeObj.subtypes[0] === 'N/A') {
       setSelectedProfileSubtype('N/A')
-      setCreationStep('complete')
+      setCreationStep('configure')
     } else {
       setCreationStep('subtype')
     }
@@ -75,13 +75,7 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
 
   const handleSelectSubtype = (subtype: string) => {
     setSelectedProfileSubtype(subtype)
-    setCreationStep('complete')
-  }
-
-  const handleNextToConfiguration = () => {
-    if (selectedProfileType && selectedProfileSubtype) {
-      setCreationStep('configure')
-    }
+    setCreationStep('configure')
   }
 
   const handleBackStep = () => {
@@ -89,10 +83,16 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
       setCreationStep('type')
       setSelectedProfileType('')
       setSelectedProfileSubtype('')
-    } else if (creationStep === 'complete') {
-      setCreationStep('subtype')
     } else if (creationStep === 'configure') {
-      setCreationStep('complete')
+      const typeObj = profileTypesData.profileTypes.find(t => t.name === selectedProfileType)
+      if (typeObj?.subtypes.length === 1 && typeObj.subtypes[0] === 'N/A') {
+        setCreationStep('type')
+        setSelectedProfileType('')
+        setSelectedProfileSubtype('')
+      } else {
+        setCreationStep('subtype')
+        setSelectedProfileSubtype('')
+      }
     }
   }
 
@@ -193,25 +193,6 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
                   </button>
                 ))}
               </div>
-            </div>
-          )}
-
-          {creationStep === 'complete' && (
-            <div className="step-content">
-              <button className="back-btn" onClick={handleBackStep}>
-                ← Back
-              </button>
-              <div className="profile-info">
-                <p className="info-label">
-                  Profile Type: <strong>{selectedProfileType}</strong>
-                </p>
-                <p className="info-label">
-                  Subtype: <strong>{selectedProfileSubtype}</strong>
-                </p>
-              </div>
-              <button className="create-btn" onClick={handleNextToConfiguration}>
-                Next
-              </button>
             </div>
           )}
 

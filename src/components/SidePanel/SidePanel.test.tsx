@@ -39,4 +39,11 @@ describe('SidePanel', () => {
     expect(screen.getByText('Select a subtype:')).toBeInTheDocument()
     expect(screen.getByText('← Back')).toBeInTheDocument()
   })
+
+  it('goes straight to form when subtype selected', async () => {
+    render(<SidePanel {...defaultProps} isOpen />)
+    await userEvent.click(screen.getByText('DLP'))
+    await userEvent.click(screen.getByText('Fingerprint Rules'))
+    expect(screen.getByLabelText('Rule Name')).toBeInTheDocument()
+  })
 })
