@@ -1,6 +1,21 @@
 import type { Profile, SortField } from './Profiles'
+import { TYPE_ICONS, TYPE_COLORS } from './typeConfig'
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
+
+const formatDate = (dateString: string): string => {
+  try {
+    const date = new Date(dateString)
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0')
+    const day = String(date.getUTCDate()).padStart(2, '0')
+    const year = String(date.getUTCFullYear()).slice(-2)
+    const hours = String(date.getUTCHours()).padStart(2, '0')
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0')
+    return `${month}/${day}/${year} ${hours}:${minutes}`
+  } catch {
+    return dateString
+  }
+}
 
 interface ProfilesTableProps {
   paginatedProfiles: Profile[]
@@ -70,14 +85,25 @@ export default function ProfilesTable({
               paginatedProfiles.map(profile => (
                 <tr key={profile.id}>
                   <td>{profile.name}</td>
-                  <td>{profile.type}</td>
+                  <td>
+                    <span
+                      className="type-pill"
+                      style={{
+                        color: TYPE_COLORS[profile.type]?.color || '#555',
+                        backgroundColor: TYPE_COLORS[profile.type]?.bg || '#f0f0f0',
+                      }}
+                    >
+                      <span className="type-pill-icon">{TYPE_ICONS[profile.type]}</span>
+                      {profile.type}
+                    </span>
+                  </td>
                   <td>{profile.subtype}</td>
                   <td>
                     <span className={`category-badge ${profile.category.toLowerCase()}`}>
                       {profile.category}
                     </span>
                   </td>
-                  <td>{profile.created}</td>
+                  <td>{formatDate(profile.created)}</td>
                 </tr>
               ))
             ) : (

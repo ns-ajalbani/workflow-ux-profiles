@@ -57,7 +57,7 @@ export default function Profiles() {
             subtype: selectedSubtype || undefined,
             category: selectedCategory || undefined,
             search: searchTerm || undefined,
-          }
+          },
         )
         setPaginatedProfiles(response.data)
         setTotalCount(response.total)
@@ -71,7 +71,16 @@ export default function Profiles() {
     }
 
     loadProfiles()
-  }, [currentPage, pageSize, sortField, sortDirection, selectedType, selectedSubtype, selectedCategory, searchTerm])
+  }, [
+    currentPage,
+    pageSize,
+    sortField,
+    sortDirection,
+    selectedType,
+    selectedSubtype,
+    selectedCategory,
+    searchTerm,
+  ])
 
   useEffect(() => {
     const params = new URLSearchParams()

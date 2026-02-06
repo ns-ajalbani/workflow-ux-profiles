@@ -16,7 +16,7 @@ const MOCK_PROFILES = [
     type: 'DLP',
     subtype: 'DLP Profiles',
     category: 'Predefined',
-    created: '2024-01-15',
+    created: '2024-01-15T16:32:00Z',
   },
   {
     id: '2',
@@ -24,7 +24,7 @@ const MOCK_PROFILES = [
     type: 'DLP',
     subtype: 'Fingerprint Rules',
     category: 'Predefined',
-    created: '2024-01-10',
+    created: '2024-01-10T10:05:00Z',
   },
   {
     id: '3',
@@ -32,7 +32,7 @@ const MOCK_PROFILES = [
     type: 'Threat Protection',
     subtype: 'Malware Detection',
     category: 'Custom',
-    created: '2024-01-05',
+    created: '2024-01-05T14:22:00Z',
   },
   {
     id: '4',
@@ -40,7 +40,7 @@ const MOCK_PROFILES = [
     type: 'Custom Categories',
     subtype: 'N/A',
     category: 'Custom',
-    created: '2023-12-20',
+    created: '2023-12-20T09:45:00Z',
   },
   {
     id: '5',
@@ -48,7 +48,7 @@ const MOCK_PROFILES = [
     type: 'Destination',
     subtype: 'Exact',
     category: 'Predefined',
-    created: '2023-12-15',
+    created: '2023-12-15T17:18:00Z',
   },
   {
     id: '6',
@@ -56,7 +56,7 @@ const MOCK_PROFILES = [
     type: 'App Instance',
     subtype: 'New App',
     category: 'Predefined',
-    created: '2023-12-10',
+    created: '2023-12-10T11:30:00Z',
   },
   {
     id: '7',
@@ -64,7 +64,7 @@ const MOCK_PROFILES = [
     type: 'HTTP Header',
     subtype: 'Request',
     category: 'Custom',
-    created: '2023-12-05',
+    created: '2023-12-05T13:42:00Z',
   },
   {
     id: '8',
@@ -72,7 +72,7 @@ const MOCK_PROFILES = [
     type: 'Domain',
     subtype: 'N/A',
     category: 'Custom',
-    created: '2023-11-30',
+    created: '2023-11-30T15:55:00Z',
   },
   {
     id: '9',
@@ -80,7 +80,7 @@ const MOCK_PROFILES = [
     type: 'User',
     subtype: 'N/A',
     category: 'Predefined',
-    created: '2023-11-25',
+    created: '2023-11-25T08:20:00Z',
   },
   {
     id: '10',
@@ -88,7 +88,7 @@ const MOCK_PROFILES = [
     type: 'File',
     subtype: 'File Type',
     category: 'Predefined',
-    created: '2023-11-20',
+    created: '2023-11-20T12:15:00Z',
   },
   {
     id: '11',
@@ -96,7 +96,7 @@ const MOCK_PROFILES = [
     type: 'Constraint',
     subtype: 'Users',
     category: 'Custom',
-    created: '2023-11-15',
+    created: '2023-11-15T18:35:00Z',
   },
   {
     id: '12',
@@ -104,7 +104,7 @@ const MOCK_PROFILES = [
     type: 'Quarantine',
     subtype: 'Quarantine Profile',
     category: 'Predefined',
-    created: '2023-11-10',
+    created: '2023-11-10T10:50:00Z',
   },
   {
     id: '13',
@@ -112,7 +112,7 @@ const MOCK_PROFILES = [
     type: 'Legal Hold',
     subtype: 'N/A',
     category: 'Custom',
-    created: '2023-11-05',
+    created: '2023-11-05T14:05:00Z',
   },
   {
     id: '14',
@@ -120,7 +120,7 @@ const MOCK_PROFILES = [
     type: 'Forensic',
     subtype: 'N/A',
     category: 'Predefined',
-    created: '2023-10-30',
+    created: '2023-10-30T16:40:00Z',
   },
   {
     id: '15',
@@ -128,7 +128,7 @@ const MOCK_PROFILES = [
     type: 'Threat Protection',
     subtype: 'Remediation',
     category: 'Custom',
-    created: '2023-10-25',
+    created: '2023-10-25T09:12:00Z',
   },
   {
     id: '16',
@@ -136,7 +136,7 @@ const MOCK_PROFILES = [
     type: 'Network Location',
     subtype: 'Multiple Object',
     category: 'Custom',
-    created: '2023-10-20',
+    created: '2023-10-20T15:28:00Z',
   },
 ]
 
@@ -155,7 +155,7 @@ app.get('/api/profiles', (req, res) => {
 
   console.log(`\n📡 Received API Request`)
   console.log(
-    `   URL: GET /api/profiles?page=${page}&pageSize=${pageSize}&sortField=${sortField}&sortDirection=${sortDirection}${type ? `&type=${type}` : ''}${category ? `&category=${category}` : ''}${search ? `&search=${search}` : ''}`
+    `   URL: GET /api/profiles?page=${page}&pageSize=${pageSize}&sortField=${sortField}&sortDirection=${sortDirection}${type ? `&type=${type}` : ''}${category ? `&category=${category}` : ''}${search ? `&search=${search}` : ''}`,
   )
 
   // Apply filters
@@ -173,7 +173,9 @@ app.get('/api/profiles', (req, res) => {
   })
 
   const total = filtered.length
-  console.log(`   Filters: type=${type || 'none'}, category=${category || 'none'}, search=${search || 'none'}`)
+  console.log(
+    `   Filters: type=${type || 'none'}, category=${category || 'none'}, search=${search || 'none'}`,
+  )
   console.log(`   Results after filtering: ${total} items`)
 
   // Apply sorting
@@ -219,7 +221,9 @@ app.get('/api/profiles', (req, res) => {
   const endIndex = startIndex + pageSizeNum
   const paginatedData = filtered.slice(startIndex, endIndex)
 
-  console.log(`   Pagination: page=${pageNum}, pageSize=${pageSizeNum}, returning ${paginatedData.length} items`)
+  console.log(
+    `   Pagination: page=${pageNum}, pageSize=${pageSizeNum}, returning ${paginatedData.length} items`,
+  )
   console.log(`✅ API Response sent\n`)
 
   res.json({

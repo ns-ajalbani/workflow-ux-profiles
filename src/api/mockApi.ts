@@ -26,7 +26,7 @@ const API_BASE_URL = 'http://localhost:3000/api'
 
 export async function fetchProfiles(
   pagination: PaginationParams,
-  filters: FilterParams
+  filters: FilterParams,
 ): Promise<ApiResponse<Profile>> {
   // Build query parameters
   const params = new URLSearchParams({
@@ -42,9 +42,7 @@ export async function fetchProfiles(
   if (filters.category) params.append('category', filters.category)
   if (filters.search) params.append('search', filters.search)
 
-  console.log(
-    `📡 API Call - GET ${API_BASE_URL}/profiles?${params.toString()}`
-  )
+  console.log(`📡 API Call - GET ${API_BASE_URL}/profiles?${params.toString()}`)
 
   try {
     const response = await fetch(`${API_BASE_URL}/profiles?${params.toString()}`)
@@ -54,9 +52,7 @@ export async function fetchProfiles(
     }
 
     const data = await response.json()
-    console.log(
-      `✅ API Response - Returning ${data.data.length} items (Total: ${data.total})`
-    )
+    console.log(`✅ API Response - Returning ${data.data.length} items (Total: ${data.total})`)
     return data
   } catch (error) {
     console.error('❌ API Error:', error)

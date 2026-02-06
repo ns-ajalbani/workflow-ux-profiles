@@ -288,6 +288,23 @@
   box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
 }
 
+.type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.type-pill-icon {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
 .category-badge {
   display: inline-block;
   padding: 4px 12px;
@@ -416,17 +433,81 @@
   background: #f0f6ff;
 }
 
+.option-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.option-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .option-name {
   font-size: 14px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 4px;
+}
+
+.option-info-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.option-info-icon {
+  display: flex;
+  align-items: center;
+  color: #999;
+  cursor: help;
+  transition: color 0.2s ease;
+}
+
+.option-info-icon:hover {
+  color: #0066cc;
+}
+
+.option-tooltip {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  background: #333;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: 4px;
+  width: 260px;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.option-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 8px;
+  border: 6px solid transparent;
+  border-bottom-color: #333;
+}
+
+.option-info-wrapper:hover .option-tooltip {
+  display: block;
 }
 
 .option-description {
   font-size: 12px;
   color: #666;
   line-height: 1.4;
+  padding-left: 22px;
 }
 
 .subtype-options {
@@ -845,6 +926,160 @@
   font-size: 12px;
   color: #999;
   margin: 8px 0 0 0;
+}
+
+/* Destination Form */
+.dest-match-type {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dest-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.dest-radio {
+  width: 16px;
+  height: 16px;
+  accent-color: #0066cc;
+  cursor: pointer;
+}
+
+.dest-case-select {
+  padding: 6px 10px;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+  background: white;
+  cursor: pointer;
+}
+
+.dest-case-select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+.dest-info-banner {
+  background: #f0f6ff;
+  border: 1px solid #cce0ff;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.dest-definition-help {
+  margin-bottom: 12px;
+}
+
+.dest-definition-help p {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 4px 0;
+  line-height: 1.5;
+}
+
+.dest-definition-help code {
+  display: block;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.dest-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.dest-toolbar-btn {
+  background: white;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dest-toolbar-btn:hover {
+  border-color: #0066cc;
+  background: #f9f9f9;
+}
+
+.dest-txt-dropdown {
+  position: relative;
+}
+
+.dest-txt-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.dest-txt-menu button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #333;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dest-txt-menu button:last-child {
+  border-bottom: none;
+}
+
+.dest-txt-menu button:hover {
+  background: #f5f5f5;
+}
+
+.dest-definition-textarea {
+  width: 100%;
+  min-height: 200px;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+.dest-definition-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.dest-perf-warning {
+  color: #999;
+  font-style: italic;
 }
 
 .definition-label {
