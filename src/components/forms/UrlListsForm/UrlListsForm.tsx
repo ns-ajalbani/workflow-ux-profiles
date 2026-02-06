@@ -2,10 +2,12 @@ import { useState } from 'react'
 
 interface UrlListsFormProps {
   onSubmit: () => void
+  profileName?: string
+  isEditing?: boolean
 }
 
-export default function UrlListsForm({ onSubmit }: UrlListsFormProps) {
-  const [urlListName, setUrlListName] = useState('')
+export default function UrlListsForm({ onSubmit, profileName: initialProfileName, isEditing }: UrlListsFormProps) {
+  const [urlListName, setUrlListName] = useState(initialProfileName || '')
   const [urlListEntries, setUrlListEntries] = useState('')
 
   const handleSubmit = () => {
@@ -82,7 +84,7 @@ export default function UrlListsForm({ onSubmit }: UrlListsFormProps) {
       </div>
 
       <button className="create-btn" onClick={handleSubmit} disabled={!urlListName.trim()}>
-        Save
+        {isEditing ? 'Edit Profile' : 'Save'}
       </button>
     </div>
   )

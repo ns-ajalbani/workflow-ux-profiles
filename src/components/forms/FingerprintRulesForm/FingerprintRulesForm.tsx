@@ -2,10 +2,12 @@ import { useState } from 'react'
 
 interface FingerprintRulesFormProps {
   onSubmit: () => void
+  profileName?: string
+  isEditing?: boolean
 }
 
-export default function FingerprintRulesForm({ onSubmit }: FingerprintRulesFormProps) {
-  const [ruleName, setRuleName] = useState('')
+export default function FingerprintRulesForm({ onSubmit, profileName: initialProfileName, isEditing }: FingerprintRulesFormProps) {
+  const [ruleName, setRuleName] = useState(initialProfileName || '')
   const [threshold, setThreshold] = useState(70)
 
   const handleSubmit = () => {
@@ -53,7 +55,7 @@ export default function FingerprintRulesForm({ onSubmit }: FingerprintRulesFormP
       </div>
 
       <button className="create-btn" onClick={handleSubmit} disabled={!ruleName.trim()}>
-        Create Profile
+        {isEditing ? 'Edit Profile' : 'Create Profile'}
       </button>
     </div>
   )

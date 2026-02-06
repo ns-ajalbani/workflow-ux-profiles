@@ -3,10 +3,12 @@ import { useState, useRef } from 'react'
 interface DestinationFormProps {
   subtype: string
   onSubmit: () => void
+  profileName?: string
+  isEditing?: boolean
 }
 
-export default function DestinationForm({ subtype, onSubmit }: DestinationFormProps) {
-  const [profileName, setProfileName] = useState('')
+export default function DestinationForm({ subtype, onSubmit, profileName: initialProfileName, isEditing }: DestinationFormProps) {
+  const [profileName, setProfileName] = useState(initialProfileName || '')
   const [description, setDescription] = useState('')
   const [caseInsensitive, setCaseInsensitive] = useState(true)
   const [definition, setDefinition] = useState('')
@@ -181,7 +183,7 @@ export default function DestinationForm({ subtype, onSubmit }: DestinationFormPr
       </fieldset>
 
       <button className="create-btn" onClick={handleSubmit} disabled={!profileName.trim()}>
-        Save
+        {isEditing ? 'Edit Profile' : 'Save'}
       </button>
     </div>
   )

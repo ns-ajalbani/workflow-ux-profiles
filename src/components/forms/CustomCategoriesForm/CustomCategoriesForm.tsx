@@ -5,13 +5,17 @@ import MatchLogic from '../../MatchLogic'
 interface CustomCategoriesFormProps {
   onNavigateToProfile: (type: string) => void
   onSubmit: () => void
+  profileName?: string
+  isEditing?: boolean
 }
 
 export default function CustomCategoriesForm({
   onNavigateToProfile,
   onSubmit,
+  profileName: initialProfileName,
+  isEditing,
 }: CustomCategoriesFormProps) {
-  const [categoryName, setCategoryName] = useState('')
+  const [categoryName, setCategoryName] = useState(initialProfileName || '')
   const [categoryDescription, setCategoryDescription] = useState('')
   const [, setMatchRules] = useState<MatchRule[]>([])
 
@@ -54,7 +58,7 @@ export default function CustomCategoriesForm({
       </div>
 
       <button className="create-btn" onClick={handleSubmit} disabled={!categoryName.trim()}>
-        Save
+        {isEditing ? 'Edit Profile' : 'Save'}
       </button>
     </div>
   )

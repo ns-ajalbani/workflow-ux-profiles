@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import profileTypesData from '../../data/profileTypes.json'
-import { TYPE_ICONS, TYPE_COLORS } from '../typeConfig'
+import { TYPE_ICONS, TYPE_COLORS, SUBTYPE_ICONS } from '../typeConfig'
 import FingerprintRulesForm from '../forms/FingerprintRulesForm'
 import MalwareDetectionForm from '../forms/MalwareDetectionForm'
 import DestinationForm from '../forms/DestinationForm'
 import UrlListsForm from '../forms/UrlListsForm'
 import CustomCategoriesForm from '../forms/CustomCategoriesForm'
+import type { Profile } from '../Profiles'
 
 const TYPE_TOOLTIPS: Record<string, string> = {
   DLP: 'Protect sensitive data from unauthorized access, sharing, or exfiltration across cloud and web channels.',
@@ -44,20 +45,37 @@ interface SidePanelProps {
   isOpen: boolean
   onClose: () => void
   onNavigateToProfile: (type: string) => void
+  editingProfile?: Profile | null
 }
 
-export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: SidePanelProps) {
+export default function SidePanel({ isOpen, onClose, onNavigateToProfile, editingProfile }: SidePanelProps) {
   const [creationStep, setCreationStep] = useState<CreationStep>('type')
   const [selectedProfileType, setSelectedProfileType] = useState<string>('')
   const [selectedProfileSubtype, setSelectedProfileSubtype] = useState<string>('')
+  const [profileName, setProfileName] = useState<string>('')
 
   const currentTypeObject = profileTypesData.profileTypes.find(t => t.name === selectedProfileType)
   const availableSubtypes = currentTypeObject?.subtypes || []
+
+  useEffect(() => {
+    if (editingProfile && isOpen) {
+      setSelectedProfileType(editingProfile.type)
+      setSelectedProfileSubtype(editingProfile.subtype)
+      setProfileName(editingProfile.name)
+      setCreationStep('configure')
+    } else if (isOpen) {
+      setCreationStep('type')
+      setSelectedProfileType('')
+      setSelectedProfileSubtype('')
+      setProfileName('')
+    }
+  }, [isOpen, editingProfile])
 
   const handleClose = () => {
     setCreationStep('type')
     setSelectedProfileType('')
     setSelectedProfileSubtype('')
+    setProfileName('')
     onClose()
   }
 
@@ -117,7 +135,7 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
 
       <div className={`side-panel ${isOpen ? 'open' : ''}`}>
         <div className="side-panel-header">
-          <h3>Create New Profile</h3>
+          <h3>{editingProfile ? 'Edit Profile' : 'Create New Profile'}</h3>
           <button className="close-btn" onClick={handleClose}>
             ×
           </button>
@@ -132,6 +150,9 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
                   <button
                     key={profileType.id}
                     className="type-option"
+                    style={{
+                      borderLeftColor: TYPE_COLORS[profileType.name]?.color || 'transparent',
+                    }}
                     onClick={() => handleSelectType(profileType.name)}
                   >
                     <div className="option-header">
@@ -139,34 +160,23 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
                         className="option-icon"
                         style={{
                           color: TYPE_COLORS[profileType.name]?.color || '#555',
+                          background: TYPE_COLORS[profileType.name]?.bg || '#f5f5f5',
                         }}
                       >
                         {TYPE_ICONS[profileType.name]}
                       </span>
-                      <span className="option-name">{profileType.name}</span>
-                      <span className="option-info-wrapper">
-                        <span className="option-info-icon">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="12" y1="16" x2="12" y2="12" />
-                            <line x1="12" y1="8" x2="12.01" y2="8" />
-                          </svg>
-                        </span>
-                        <span className="option-tooltip">
+                      <div className="option-text">
+                        <span className="option-name">{profileType.name}</span>
+                        <span className="option-description">
                           {TYPE_TOOLTIPS[profileType.name] || profileType.description}
                         </span>
+                      </div>
+                      <span className="option-chevron">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="9 18 15 12 9 6" />
+                        </svg>
                       </span>
                     </div>
-                    <div className="option-description">{profileType.description}</div>
                   </button>
                 ))}
               </div>
@@ -189,7 +199,17 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
                     className="subtype-option"
                     onClick={() => handleSelectSubtype(subtype)}
                   >
-                    {subtype}
+                    {SUBTYPE_ICONS[subtype] && (
+                      <span
+                        className="subtype-icon"
+                        style={{
+                          color: TYPE_COLORS[selectedProfileType]?.color || '#555',
+                        }}
+                      >
+                        {SUBTYPE_ICONS[subtype]}
+                      </span>
+                    )}
+                    <span className="subtype-label">{subtype}</span>
                   </button>
                 ))}
               </div>
@@ -198,39 +218,63 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile }: Side
 
           {creationStep === 'configure' && (
             <div className="step-content">
-              <button className="back-btn" onClick={handleBackStep}>
-                ← Back
-              </button>
-              <div className="profile-info">
-                <p className="info-label">
-                  Profile Type: <strong>{selectedProfileType}</strong>
-                </p>
-                {selectedProfileSubtype !== 'N/A' && (
-                  <p className="info-label">
-                    Subtype: <strong>{selectedProfileSubtype}</strong>
-                  </p>
-                )}
+              {!editingProfile && (
+                <button className="back-btn" onClick={handleBackStep}>
+                  ← Back
+                </button>
+              )}
+              <div
+                className="profile-info-bar"
+                style={{
+                  borderLeftColor: TYPE_COLORS[selectedProfileType]?.color || '#0066cc',
+                }}
+              >
+                <span
+                  className="profile-info-icon"
+                  style={{ color: TYPE_COLORS[selectedProfileType]?.color || '#555' }}
+                >
+                  {TYPE_ICONS[selectedProfileType]}
+                </span>
+                <span className="profile-info-text">
+                  <span className="profile-info-type">{selectedProfileType}</span>
+                  {selectedProfileSubtype !== 'N/A' && (
+                    <>
+                      <span className="profile-info-sep">/</span>
+                      {SUBTYPE_ICONS[selectedProfileSubtype] && (
+                        <span
+                          className="profile-info-subtype-icon"
+                          style={{ color: TYPE_COLORS[selectedProfileType]?.color || '#555' }}
+                        >
+                          {SUBTYPE_ICONS[selectedProfileSubtype]}
+                        </span>
+                      )}
+                      <span className="profile-info-subtype">{selectedProfileSubtype}</span>
+                    </>
+                  )}
+                </span>
               </div>
 
               {selectedProfileType === 'DLP' && selectedProfileSubtype === 'Fingerprint Rules' && (
-                <FingerprintRulesForm onSubmit={handleFormSubmit} />
+                <FingerprintRulesForm onSubmit={handleFormSubmit} profileName={profileName} isEditing={!!editingProfile} />
               )}
 
               {selectedProfileType === 'Threat Protection' &&
                 selectedProfileSubtype === 'Malware Detection' && (
-                  <MalwareDetectionForm onSubmit={handleFormSubmit} />
+                  <MalwareDetectionForm onSubmit={handleFormSubmit} profileName={profileName} isEditing={!!editingProfile} />
                 )}
 
               {selectedProfileType === 'Destination' && (
-                <DestinationForm subtype={selectedProfileSubtype} onSubmit={handleFormSubmit} />
+                <DestinationForm subtype={selectedProfileSubtype} onSubmit={handleFormSubmit} profileName={profileName} isEditing={!!editingProfile} />
               )}
 
-              {selectedProfileType === 'URL Lists' && <UrlListsForm onSubmit={handleFormSubmit} />}
+              {selectedProfileType === 'URL Lists' && <UrlListsForm onSubmit={handleFormSubmit} profileName={profileName} isEditing={!!editingProfile} />}
 
               {selectedProfileType === 'Custom Categories' && (
                 <CustomCategoriesForm
                   onNavigateToProfile={onNavigateToProfile}
                   onSubmit={handleFormSubmit}
+                  profileName={profileName}
+                  isEditing={!!editingProfile}
                 />
               )}
             </div>

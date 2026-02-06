@@ -1,5 +1,6 @@
+import { useState, useEffect, useRef } from 'react'
 import type { Profile, SortField } from '../Profiles'
-import { TYPE_ICONS, TYPE_COLORS } from '../typeConfig'
+import { TYPE_ICONS, TYPE_COLORS, SUBTYPE_ICONS } from '../typeConfig'
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
 
@@ -29,6 +30,8 @@ interface ProfilesTableProps {
   onSort: (field: SortField) => void
   onPageChange: (page: number) => void
   onPageSizeChange: (size: number) => void
+  onEditProfile?: (profile: Profile) => void
+  onDeleteProfile?: (profileId: string) => void
 }
 
 export default function ProfilesTable({
@@ -45,15 +48,49 @@ export default function ProfilesTable({
   onSort,
   onPageChange,
   onPageSizeChange,
+  onEditProfile,
+  onDeleteProfile,
 }: ProfilesTableProps) {
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null)
+  const tableRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tableRef.current && !tableRef.current.contains(event.target as Node)) {
+        setOpenMenuId(null)
+      }
+    }
+
+    if (openMenuId) {
+      document.addEventListener('click', handleClickOutside)
+      return () => {
+        document.removeEventListener('click', handleClickOutside)
+      }
+    }
+  }, [openMenuId])
+
   const getSortIndicator = (field: SortField) => {
     if (sortField !== field) return ''
     return sortDirection === 'asc' ? ' ↑' : ' ↓'
   }
 
+  const handleMenuToggle = (profileId: string) => {
+    setOpenMenuId(openMenuId === profileId ? null : profileId)
+  }
+
+  const handleEdit = (profile: Profile) => {
+    onEditProfile?.(profile)
+    setOpenMenuId(null)
+  }
+
+  const handleDelete = (profileId: string) => {
+    onDeleteProfile?.(profileId)
+    setOpenMenuId(null)
+  }
+
   return (
     <>
-      <div className="profiles-table-wrapper">
+      <div className="profiles-table-wrapper" ref={tableRef}>
         <table className="profiles-table">
           <thead>
             <tr>
@@ -72,12 +109,16 @@ export default function ProfilesTable({
               <th onClick={() => onSort('created')} className="sortable">
                 Created{getSortIndicator('created')}
               </th>
+              <th onClick={() => onSort('createdBy')} className="sortable">
+                Created By{getSortIndicator('createdBy')}
+              </th>
+              <th className="action-column">Action</th>
             </tr>
           </thead>
           <tbody>
             {isLoading ? (
               <tr className="loading-row">
-                <td colSpan={5}>Loading...</td>
+                <td colSpan={7}>Loading...</td>
               </tr>
             ) : paginatedProfiles.length > 0 ? (
               paginatedProfiles.map(profile => (
@@ -95,18 +136,62 @@ export default function ProfilesTable({
                       {profile.type}
                     </span>
                   </td>
-                  <td>{profile.subtype}</td>
+                  <td>
+                    {profile.subtype !== 'N/A' ? (
+                      <span className="subtype-cell">
+                        {SUBTYPE_ICONS[profile.subtype] && (
+                          <span
+                            className="subtype-cell-icon"
+                            style={{ color: TYPE_COLORS[profile.type]?.color || '#555' }}
+                          >
+                            {SUBTYPE_ICONS[profile.subtype]}
+                          </span>
+                        )}
+                        {profile.subtype}
+                      </span>
+                    ) : (
+                      <span className="subtype-na">—</span>
+                    )}
+                  </td>
                   <td>
                     <span className={`category-badge ${profile.category.toLowerCase()}`}>
                       {profile.category}
                     </span>
                   </td>
                   <td>{formatDate(profile.created)}</td>
+                  <td>{profile.createdBy}</td>
+                  <td className="action-cell">
+                    <div className="action-menu-wrapper">
+                      <button
+                        className="action-menu-btn"
+                        onClick={() => handleMenuToggle(profile.id)}
+                        title={profile.name}
+                      >
+                        ⋯
+                      </button>
+                      {openMenuId === profile.id && (
+                        <div className="action-dropdown">
+                          <button
+                            className="action-dropdown-item edit"
+                            onClick={() => handleEdit(profile)}
+                          >
+                            ✎ Edit
+                          </button>
+                          <button
+                            className="action-dropdown-item delete"
+                            onClick={() => handleDelete(profile.id)}
+                          >
+                            🗑 Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr className="empty-row">
-                <td colSpan={5}>No profiles found</td>
+                <td colSpan={7}>No profiles found</td>
               </tr>
             )}
           </tbody>

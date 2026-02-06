@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 import Profiles from './Profiles'
 import * as mockApi from '../../api/mockApi'
 
@@ -13,8 +14,12 @@ const mockProfiles = [
     subtype: 'Fingerprint Rules',
     category: 'Predefined' as const,
     created: '2024-02-05T10:00:00Z',
+    createdBy: 'admin@example.com',
   },
 ]
+
+const renderWithRouter = (ui: React.ReactElement) =>
+  render(<MemoryRouter>{ui}</MemoryRouter>)
 
 describe('Profiles', () => {
   beforeEach(() => {
@@ -31,33 +36,33 @@ describe('Profiles', () => {
   })
 
   it('renders header and new button', () => {
-    render(<Profiles />)
+    renderWithRouter(<Profiles />)
     expect(screen.getByText('Profiles')).toBeInTheDocument()
     expect(screen.getByText('+ New')).toBeInTheDocument()
   })
 
   it('fetches profiles on mount', async () => {
-    render(<Profiles />)
+    renderWithRouter(<Profiles />)
     await waitFor(() => {
       expect(mockApi.fetchProfiles).toHaveBeenCalled()
     })
   })
 
   it('displays loaded profiles', async () => {
-    render(<Profiles />)
+    renderWithRouter(<Profiles />)
     await waitFor(() => {
       expect(screen.getByText('DLP Profile')).toBeInTheDocument()
     })
   })
 
   it('opens side panel when New clicked', async () => {
-    render(<Profiles />)
+    renderWithRouter(<Profiles />)
     await userEvent.click(screen.getByText('+ New'))
     expect(screen.getByText('Create New Profile')).toBeInTheDocument()
   })
 
   it('renders filter controls', () => {
-    render(<Profiles />)
+    renderWithRouter(<Profiles />)
     expect(screen.getByLabelText('Search')).toBeInTheDocument()
   })
 })

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
 import ProfilesFilter from '../ProfilesFilter'
 import ProfilesTable from '../ProfilesTable'
 import SidePanel from '../SidePanel'
-import { fetchProfiles } from '../../api/mockApi'
+import { fetchProfiles, fetchProfile, deleteProfile } from '../../api/mockApi'
 import './Profiles.css'
 
 export interface Profile {
@@ -12,19 +13,22 @@ export interface Profile {
   subtype: string
   category: 'Predefined' | 'Custom'
   created: string
+  createdBy: string
 }
 
-export type SortField = 'name' | 'type' | 'subtype' | 'category' | 'created'
+export type SortField = 'name' | 'type' | 'subtype' | 'category' | 'created' | 'createdBy'
 type SortDirection = 'asc' | 'desc'
 
 export default function Profiles() {
-  const params = new URLSearchParams(window.location.search)
-  const urlType = params.get('type') || ''
-  const urlCategory = params.get('category') || ''
-  const urlSearch = params.get('search') || ''
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { editId: urlEditId } = useParams<{ editId: string }>()
+  const navigate = useNavigate()
+  const urlType = searchParams.get('type') || ''
+  const urlCategory = searchParams.get('category') || ''
+  const urlSearch = searchParams.get('search') || ''
 
   const [selectedType, setSelectedType] = useState<string>(urlType)
-  const [selectedSubtype, setSelectedSubtype] = useState<string>(params.get('subtype') || '')
+  const [selectedSubtype, setSelectedSubtype] = useState<string>(searchParams.get('subtype') || '')
   const [selectedCategory, setSelectedCategory] = useState<string>(urlCategory)
   const [searchTerm, setSearchTerm] = useState<string>(urlSearch)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -35,6 +39,8 @@ export default function Profiles() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [paginatedProfiles, setPaginatedProfiles] = useState<Profile[]>([])
   const [totalCount, setTotalCount] = useState<number>(0)
+  const [editingProfile, setEditingProfile] = useState<Profile | null>(null)
+  const [refreshKey, setRefreshKey] = useState<number>(0)
 
   const handleFilterChange = () => {
     setCurrentPage(1)
@@ -80,19 +86,33 @@ export default function Profiles() {
     selectedSubtype,
     selectedCategory,
     searchTerm,
+    refreshKey,
   ])
+
+  // Load profile from URL path parameter (/profiles/:editId)
+  useEffect(() => {
+    if (urlEditId) {
+      fetchProfile(urlEditId)
+        .then(profile => {
+          setEditingProfile(profile)
+          setIsPanelOpen(true)
+        })
+        .catch(error => {
+          console.error('Failed to fetch profile:', error)
+          navigate('/profiles')
+        })
+    }
+  }, [urlEditId, navigate])
 
   useEffect(() => {
     const params = new URLSearchParams()
-    if (selectedType) params.append('type', selectedType)
-    if (selectedSubtype) params.append('subtype', selectedSubtype)
-    if (selectedCategory) params.append('category', selectedCategory)
-    if (searchTerm) params.append('search', searchTerm)
+    if (selectedType) params.set('type', selectedType)
+    if (selectedSubtype) params.set('subtype', selectedSubtype)
+    if (selectedCategory) params.set('category', selectedCategory)
+    if (searchTerm) params.set('search', searchTerm)
 
-    const queryString = params.toString()
-    const newUrl = queryString ? `?${queryString}` : window.location.pathname
-    window.history.replaceState(null, '', newUrl)
-  }, [selectedType, selectedSubtype, selectedCategory, searchTerm])
+    setSearchParams(params, { replace: true })
+  }, [selectedType, selectedSubtype, selectedCategory, searchTerm, setSearchParams])
 
   const totalPages = Math.ceil(totalCount / pageSize)
   const startIndex = (currentPage - 1) * pageSize
@@ -115,7 +135,22 @@ export default function Profiles() {
       setSelectedType('URL Lists')
     }
     const filterParam = type === 'Destination' ? 'destination' : 'urllists'
-    window.history.pushState(null, '', `?filter=${filterParam}`)
+    setSearchParams({ filter: filterParam })
+  }
+
+  const handleEditProfile = (profile: Profile) => {
+    setEditingProfile(profile)
+    setIsPanelOpen(true)
+    navigate(`/profiles/${profile.id}`)
+  }
+
+  const handleDeleteProfile = async (profileId: string) => {
+    try {
+      await deleteProfile(profileId)
+      setRefreshKey(k => k + 1)
+    } catch (error) {
+      console.error('Failed to delete profile:', error)
+    }
   }
 
   return (
@@ -158,12 +193,21 @@ export default function Profiles() {
           setPageSize(size)
           setCurrentPage(1)
         }}
+        onEditProfile={handleEditProfile}
+        onDeleteProfile={handleDeleteProfile}
       />
 
       <SidePanel
         isOpen={isPanelOpen}
-        onClose={() => setIsPanelOpen(false)}
+        onClose={() => {
+          setIsPanelOpen(false)
+          setEditingProfile(null)
+          if (urlEditId) {
+            navigate('/profiles')
+          }
+        }}
         onNavigateToProfile={handleNavigateToProfile}
+        editingProfile={editingProfile}
       />
     </div>
   )

@@ -11,6 +11,7 @@ const mockProfiles: Profile[] = [
     subtype: 'Fingerprint Rules',
     category: 'Predefined',
     created: '2024-02-05T10:00:00Z',
+    createdBy: 'admin@example.com',
   },
 ]
 
@@ -36,7 +37,7 @@ describe('ProfilesTable', () => {
     expect(screen.getByText(/Type/)).toBeInTheDocument()
     expect(screen.getByText(/Subtype/)).toBeInTheDocument()
     expect(screen.getByText(/Category/)).toBeInTheDocument()
-    expect(screen.getByText(/Created/)).toBeInTheDocument()
+    expect(screen.getByText(/^Created ↓$/)).toBeInTheDocument()
   })
 
   it('renders profile data', () => {

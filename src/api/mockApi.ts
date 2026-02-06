@@ -24,6 +24,44 @@ export interface ApiResponse<T> {
 // API endpoint - update this to your backend URL
 const API_BASE_URL = 'http://localhost:3000/api'
 
+export async function fetchProfile(id: string): Promise<Profile> {
+  console.log(`📡 API Call - GET ${API_BASE_URL}/profiles/${id}`)
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/profiles/${id}`)
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    console.log(`✅ API Response - Profile: ${data.name}`)
+    return data
+  } catch (error) {
+    console.error('❌ API Error:', error)
+    throw error
+  }
+}
+
+export async function deleteProfile(id: string): Promise<void> {
+  console.log(`📡 API Call - DELETE ${API_BASE_URL}/profiles/${id}`)
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/profiles/${id}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`)
+    }
+
+    console.log(`✅ API Response - Profile deleted`)
+  } catch (error) {
+    console.error('❌ API Error:', error)
+    throw error
+  }
+}
+
 export async function fetchProfiles(
   pagination: PaginationParams,
   filters: FilterParams,
