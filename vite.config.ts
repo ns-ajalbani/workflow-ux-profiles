@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import federation from '@originjs/vite-plugin-federation'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +17,12 @@ export default defineConfig({
         './AppRoutes': './src/components/approutes/AppRoutes/AppRoutes.tsx',
       },
       shared: ['react', 'react-dom', 'react-router-dom'],
+    }),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+      filename: 'dist/stats.html',
     }),
   ],
 })
