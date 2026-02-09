@@ -21,8 +21,8 @@ export interface ApiResponse<T> {
   pageSize: number
 }
 
-// API endpoint - update this to your backend URL
-const API_BASE_URL = 'http://localhost:3000/api'
+// API endpoint - uses environment variable or defaults to localhost
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'
 
 export async function fetchProfile(id: string): Promise<Profile> {
   console.log(`📡 API Call - GET ${API_BASE_URL}/profiles/${id}`)
