@@ -130,7 +130,7 @@ const MOCK_PROFILES = [
     category: 'Custom',
     created: '2023-10-20',
   },
-];
+]
 
 function applyFilters(profiles, filters) {
   return profiles.filter(profile => {
@@ -220,14 +220,22 @@ console.log(`Items: ${filteredSearch.map(p => p.name).join(', ')}\n`)
 
 // Test 6: Combined filters
 console.log('Test 6: Filter by type "Threat Protection" AND search "Threat"')
-const filteredCombined = applyFilters(MOCK_PROFILES, { type: 'Threat Protection', search: 'Threat' })
+const filteredCombined = applyFilters(MOCK_PROFILES, {
+  type: 'Threat Protection',
+  search: 'Threat',
+})
 console.log(`Total matching: ${filteredCombined.length}`)
 console.log(`Items: ${filteredCombined.map(p => p.name).join(', ')}\n`)
 
 // Test 7: Sorting by name (ascending)
 console.log('Test 7: Sort by name (ascending)')
 const sortedByName = applySorting(MOCK_PROFILES, 'name', 'asc')
-console.log(`First 3 items: ${sortedByName.slice(0, 3).map(p => p.name).join(', ')}\n`)
+console.log(
+  `First 3 items: ${sortedByName
+    .slice(0, 3)
+    .map(p => p.name)
+    .join(', ')}\n`,
+)
 
 // Test 8: Pagination with filters
 console.log('Test 8: Filter by category "Predefined" and paginate (page 1, pageSize 5)')
