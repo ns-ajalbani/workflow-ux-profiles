@@ -75,6 +75,7 @@ All API functionality tests passed successfully:
 ### Component Updates
 
 #### `src/components/Profiles.tsx`
+
 - ✅ Converted to use mock API for data fetching
 - ✅ Added `useEffect` hook for API calls on filter/sort/pagination changes
 - ✅ Added `isLoading` state for loading indicators
@@ -82,6 +83,7 @@ All API functionality tests passed successfully:
 - ✅ Maintains URL parameter syncing for bookmarkable filters
 
 #### `src/components/ProfilesTable.tsx`
+
 - ✅ Added optional `isLoading` prop
 - ✅ Shows "Loading..." message during API requests
 - ✅ Displays data from server-side pagination
@@ -110,6 +112,7 @@ All API functionality tests passed successfully:
 ## Technical Details
 
 ### Dependency Graph
+
 - Page/Sort/Filter changes → Trigger `useEffect`
 - `useEffect` calls `fetchProfiles()` API
 - API applies filters, sorting, and pagination
@@ -117,10 +120,12 @@ All API functionality tests passed successfully:
 - Component re-renders with new data
 
 ### API Response Latency
+
 - Simulated 300ms delay to mimic real-world API behavior
 - Allows testing of loading states
 
 ### Data Flow
+
 1. User interacts with filters/pagination/sorting controls
 2. State updates trigger effect
 3. Effect calls mock API with current parameters
@@ -132,13 +137,16 @@ All API functionality tests passed successfully:
 ## Files Modified/Created
 
 ### Created:
+
 - `src/api/mockApi.ts` - Mock API service with server-side logic
 
 ### Modified:
+
 - `src/components/Profiles.tsx` - Refactored to use API
 - `src/components/ProfilesTable.tsx` - Added loading state support
 
 ### Testing:
+
 - `test-api.js` - API logic verification (8/8 tests passing)
 
 ## Next Steps (Optional)
@@ -148,7 +156,7 @@ To convert to a real API endpoint, simply replace the `fetchProfiles()` function
 ```typescript
 export async function fetchProfiles(
   pagination: PaginationParams,
-  filters: FilterParams
+  filters: FilterParams,
 ): Promise<ApiResponse<Profile>> {
   const params = new URLSearchParams({
     page: pagination.page.toString(),

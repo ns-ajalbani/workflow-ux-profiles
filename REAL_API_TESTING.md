@@ -50,6 +50,7 @@ Go to: **http://localhost:5174/**
 Each action will show a new HTTP request:
 
 #### Test 1: Click to Page 2
+
 - **Action**: Click page "2" button at bottom
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -58,6 +59,7 @@ Each action will show a new HTTP request:
   - Response shows 6 items
 
 #### Test 2: Change Rows Per Page
+
 - **Action**: Select "20" from "Rows per page" dropdown
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -66,6 +68,7 @@ Each action will show a new HTTP request:
   - Response shows all 16 items
 
 #### Test 3: Sort by Name Column
+
 - **Action**: Click "Profile Name" column header
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -74,6 +77,7 @@ Each action will show a new HTTP request:
   - Response sorted by name
 
 #### Test 4: Toggle Sort Direction
+
 - **Action**: Click "Profile Name" header again
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -82,6 +86,7 @@ Each action will show a new HTTP request:
   - Response sorted descending
 
 #### Test 5: Select Filter
+
 - **Action**: Click Type dropdown, select "DLP"
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -90,6 +95,7 @@ Each action will show a new HTTP request:
   - Response shows 2 matching items
 
 #### Test 6: Add Another Filter
+
 - **Action**: Keep Type=DLP, click Category dropdown, select "Predefined"
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -98,6 +104,7 @@ Each action will show a new HTTP request:
   - Response shows matching items with both filters applied
 
 #### Test 7: Search
+
 - **Action**: Clear filters, type "Threat" in search box
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -106,6 +113,7 @@ Each action will show a new HTTP request:
   - Response shows 2 matching items
 
 #### Test 8: Clear Filter
+
 - **Action**: Click X on search box or select blank
 - **What you'll see in Network tab**:
   - New GET request appears
@@ -123,16 +131,16 @@ GET http://localhost:3000/api/profiles?page=1&pageSize=10&sortField=created&sort
 
 ### Query Parameters
 
-| Parameter | Example | Required |
-|-----------|---------|----------|
-| page | 1 | Yes |
-| pageSize | 10 | Yes |
-| sortField | created | Yes |
-| sortDirection | desc | Yes |
-| type | DLP | No (only if selected) |
-| subtype | DLP Profiles | No (only if selected) |
-| category | Predefined | No (only if selected) |
-| search | Profile | No (only if selected) |
+| Parameter     | Example      | Required              |
+| ------------- | ------------ | --------------------- |
+| page          | 1            | Yes                   |
+| pageSize      | 10           | Yes                   |
+| sortField     | created      | Yes                   |
+| sortDirection | desc         | Yes                   |
+| type          | DLP          | No (only if selected) |
+| subtype       | DLP Profiles | No (only if selected) |
+| category      | Predefined   | No (only if selected) |
+| search        | Profile      | No (only if selected) |
 
 ## API Response Format
 
@@ -163,6 +171,7 @@ While you test, watch the browser console and the API server console:
 ### Browser Console (F12 → Console tab)
 
 You'll see:
+
 ```
 📡 API Call - GET http://localhost:3000/api/profiles?page=1&pageSize=10&...
 ✅ API Response - Returning 10 items (Total: 16)
@@ -171,6 +180,7 @@ You'll see:
 ### Server Console
 
 You'll see:
+
 ```
 📡 Received API Request
    URL: GET /api/profiles?page=1&pageSize=10&sortField=created&sortDirection=desc
@@ -185,19 +195,23 @@ You'll see:
 In the Network tab, click on any API request to see details:
 
 ### Headers Tab
+
 - **Request URL**: `http://localhost:3000/api/profiles?...`
 - **Request Method**: `GET`
 - **Status Code**: `200`
 
 ### Preview Tab
+
 Shows the JSON response formatted
 
 ### Response Tab
+
 Shows the raw JSON response
 
 ## Verification Checklist
 
 ✅ **Each action makes a new HTTP request**
+
 - [ ] Click page number → New request in Network tab
 - [ ] Click Previous/Next → New request
 - [ ] Change rows/page → New request
@@ -209,6 +223,7 @@ Shows the raw JSON response
 - [ ] Clear filter → New request
 
 ✅ **Request parameters are correct**
+
 - [ ] `page` parameter changes with page navigation
 - [ ] `pageSize` parameter changes with dropdown selection
 - [ ] `sortField` parameter matches selected column
@@ -219,12 +234,14 @@ Shows the raw JSON response
 - [ ] Inactive filters NOT in URL
 
 ✅ **Response is correct**
+
 - [ ] Returns correct number of items
 - [ ] Total count reflects filtered results
 - [ ] Page/pageSize in response match request
 - [ ] Data matches selected page
 
 ✅ **Table updates correctly**
+
 - [ ] Table shows new data after each request
 - [ ] Total count updates on filter changes
 - [ ] Loading state appears while request is in progress
@@ -251,11 +268,13 @@ Shows the raw JSON response
 ### Getting 404 or Connection Refused?
 
 1. Check API server is running on port 3000:
+
    ```bash
    lsof -i :3000
    ```
 
 2. Check frontend is running on port 5174:
+
    ```bash
    lsof -i :5174
    ```
@@ -265,6 +284,7 @@ Shows the raw JSON response
 ### Getting CORS Error?
 
 The CORS is already configured in the server, but if you see CORS errors:
+
 - The API server may have crashed
 - Restart the server: `node server.js`
 
@@ -273,11 +293,13 @@ The CORS is already configured in the server, but if you see CORS errors:
 When you want to use a real backend:
 
 1. Update the API endpoint in `src/api/mockApi.ts`:
+
    ```typescript
    const API_BASE_URL = 'https://your-api.com/api'
    ```
 
 2. Make sure your backend returns the same response format:
+
    ```json
    {
      "data": [...],

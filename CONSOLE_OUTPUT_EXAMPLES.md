@@ -6,6 +6,7 @@ When you interact with the app, you'll see console logs like these. Each shows a
 
 **Action:** Page loads
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -26,6 +27,7 @@ When you interact with the app, you'll see console logs like these. Each shows a
 
 **Action:** Click page number "2" at bottom of table
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -41,6 +43,7 @@ When you interact with the app, you'll see console logs like these. Each shows a
 ```
 
 Notice:
+
 - Only `page` changed from 1 to 2
 - All other parameters stayed the same
 - Result shows 6 items (page 2 has items 11-16)
@@ -51,6 +54,7 @@ Notice:
 
 **Action:** Find dropdown "Rows per page:", select "20"
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -66,6 +70,7 @@ Notice:
 ```
 
 Notice:
+
 - `pageSize` changed from 10 to 20
 - `page` reset to 1 (always happens when page size changes)
 - Result shows all 16 items fit on 1 page
@@ -76,6 +81,7 @@ Notice:
 
 **Action:** Click "Profile Name" column header
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -91,6 +97,7 @@ Notice:
 ```
 
 Notice:
+
 - `sortField` changed to "name"
 - `sortDirection` changed to "asc" (ascending alphabetically)
 - Table rows now sorted: Admin User Profile, API Request Header, AWS Destination Profile...
@@ -101,6 +108,7 @@ Notice:
 
 **Action:** Click "Profile Name" header again
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -116,6 +124,7 @@ Notice:
 ```
 
 Notice:
+
 - Only `sortDirection` changed (toggled)
 - Table now sorted reverse alphabetically: Z...A
 
@@ -125,6 +134,7 @@ Notice:
 
 **Action:** Click Type dropdown, select "DLP"
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -142,6 +152,7 @@ Notice:
 ```
 
 Notice:
+
 - `filters` object now has `type: "DLP"`
 - Total reduced from 16 to 2
 - Only matching items shown
@@ -152,6 +163,7 @@ Notice:
 
 **Action:** Keep Type=DLP, click Category dropdown, select "Custom"
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -170,6 +182,7 @@ Notice:
 ```
 
 Notice:
+
 - Both filters now active (AND logic)
 - Total now 0 (no items are both DLP AND Custom)
 - Empty table shown
@@ -180,6 +193,7 @@ Notice:
 
 **Action:** Click Type dropdown, select blank/none
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -197,6 +211,7 @@ Notice:
 ```
 
 Notice:
+
 - `type` filter removed from filters object
 - Only `category: "Custom"` remains
 - Result shows 8 Custom items
@@ -207,6 +222,7 @@ Notice:
 
 **Action:** Type "Profile" in search box
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -225,6 +241,7 @@ Notice:
 ```
 
 Notice:
+
 - `search` added to filters
 - Combined with existing `category` filter (AND logic)
 - Shows 2 Custom items with "Profile" in name, type, or subtype
@@ -235,6 +252,7 @@ Notice:
 
 **Action:** Click Category dropdown, select blank/none
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -252,6 +270,7 @@ Notice:
 ```
 
 Notice:
+
 - `category` filter removed
 - `search: "Profile"` still active
 - Result shows 5 total items (not just Custom) with "Profile" in name/type/subtype
@@ -264,6 +283,7 @@ Notice:
 **Action:** Click page 2, Sort by Type (ascending), then change page size to 50
 
 **Step 1 - Click Page 2:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 2, pageSize: 20, sortField: "name", sortDirection: "desc" },
@@ -274,6 +294,7 @@ Notice:
 ```
 
 **Step 2 - Sort by Type (ascending):**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 20, sortField: "type", sortDirection: "asc" },
@@ -284,6 +305,7 @@ Notice:
 ```
 
 **Step 3 - Change page size to 50:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 50, sortField: "type", sortDirection: "asc" },
@@ -294,6 +316,7 @@ Notice:
 ```
 
 Notice:
+
 - Each action triggers a new API call
 - Parameters update correctly
 - Page resets to 1 when necessary
@@ -304,6 +327,7 @@ Notice:
 ## Key Observations
 
 ### ✅ API is Called When:
+
 - Page changes (page number clicked)
 - Page size changes (rows per page dropdown)
 - Sort field changes (clicking different column header)
@@ -313,6 +337,7 @@ Notice:
 - Search term is entered (typing in search box)
 
 ### ✅ Parameters Update:
+
 - `page`: Changes when you navigate to different pages
 - `pageSize`: Changes when you select different rows/page value
 - `sortField`: Changes when you sort by different columns
@@ -320,10 +345,12 @@ Notice:
 - `filters`: Updated as you add/remove/modify filters
 
 ### ✅ API Response Always Shows:
+
 - Number of items returned for current page
 - Total count of all matching items (after filters applied)
 
 ### ✅ Loading Happens:
+
 - 300ms simulated delay before response
 - "Loading..." message briefly appears in table
 - Response logs immediately after delay completes

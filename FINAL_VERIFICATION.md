@@ -7,12 +7,14 @@ All systems are now running with real HTTP API calls.
 ## Servers Running
 
 ### Frontend Dev Server ✅
+
 - **URL**: http://localhost:5174/
 - **Type**: Vite React Dev Server
 - **Port**: 5174
 - **Status**: Running and hot-reloading
 
 ### Mock API Server ✅
+
 - **URL**: http://localhost:3000/api
 - **Type**: Express REST API
 - **Port**: 3000
@@ -70,6 +72,7 @@ All systems are now running with real HTTP API calls.
 ## How Each Action Triggers an API Call
 
 ### 1. Initial Page Load
+
 ```
 Page loads → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=1&pageSize=10&sortField=created&sortDirection=desc
@@ -77,6 +80,7 @@ Response: First 10 items
 ```
 
 ### 2. Click Page 2
+
 ```
 User clicks page "2" → State updates → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=2&pageSize=10&sortField=created&sortDirection=desc
@@ -84,6 +88,7 @@ Response: Items 11-16
 ```
 
 ### 3. Change Rows Per Page
+
 ```
 User selects "20" → page resets to 1 → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=1&pageSize=20&sortField=created&sortDirection=desc
@@ -91,6 +96,7 @@ Response: All 16 items on one page
 ```
 
 ### 4. Sort by Column
+
 ```
 User clicks column header → sortField/sortDirection updates → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=1&pageSize=10&sortField=name&sortDirection=asc
@@ -98,6 +104,7 @@ Response: Items sorted by name
 ```
 
 ### 5. Apply Filter
+
 ```
 User selects filter → filter state updates → page resets to 1 → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=1&pageSize=10&...&type=DLP
@@ -105,6 +112,7 @@ Response: Only matching items (2 DLP items)
 ```
 
 ### 6. Add Second Filter
+
 ```
 User selects another filter → state updates → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=1&pageSize=10&...&type=DLP&category=Predefined
@@ -112,6 +120,7 @@ Response: Items matching BOTH filters
 ```
 
 ### 7. Search
+
 ```
 User types in search box → search state updates → page resets to 1 → useEffect runs → fetchProfiles() called
 GET /api/profiles?page=1&pageSize=10&...&search=Threat
@@ -121,11 +130,13 @@ Response: Items matching search term
 ## Testing Instructions
 
 ### Step 1: Open the App
+
 ```
 Go to: http://localhost:5174/
 ```
 
 ### Step 2: Open DevTools Network Tab
+
 ```
 1. Press F12
 2. Click Network tab
@@ -135,6 +146,7 @@ Go to: http://localhost:5174/
 ### Step 3: Perform Actions
 
 Each action will:
+
 1. Trigger a state change in React
 2. Run the useEffect hook
 3. Call fetchProfiles()
@@ -144,6 +156,7 @@ Each action will:
 7. Update the table
 
 **Actions to test:**
+
 - Click page numbers
 - Click Previous/Next buttons
 - Change "Rows per page" dropdown
@@ -157,6 +170,7 @@ Each action will:
 ### Step 4: Verify in Network Tab
 
 For each action, you should see:
+
 - **New GET request** appears in the Network tab
 - **URL**: `http://localhost:3000/api/profiles?...` with query parameters
 - **Status**: 200 OK
@@ -166,6 +180,7 @@ For each action, you should see:
 ### Step 5: Verify in Console
 
 Watch browser console for logs:
+
 ```
 📡 API Call - GET http://localhost:3000/api/profiles?page=1&pageSize=10&...
 ✅ API Response - Returning 10 items (Total: 16)
@@ -174,6 +189,7 @@ Watch browser console for logs:
 ### Step 6: Verify in Server Console
 
 The API server console shows each request:
+
 ```
 📡 Received API Request
    URL: GET /api/profiles?page=1&pageSize=10&sortField=created&sortDirection=desc
@@ -186,6 +202,7 @@ The API server console shows each request:
 ## Expected Network Requests
 
 ### Request 1: Initial Load
+
 ```
 GET /api/profiles?page=1&pageSize=10&sortField=created&sortDirection=desc HTTP/1.1
 Host: localhost:3000
@@ -200,6 +217,7 @@ Response: 200 OK
 ```
 
 ### Request 2: Click Page 2
+
 ```
 GET /api/profiles?page=2&pageSize=10&sortField=created&sortDirection=desc HTTP/1.1
 Host: localhost:3000
@@ -214,6 +232,7 @@ Response: 200 OK
 ```
 
 ### Request 3: Sort by Name
+
 ```
 GET /api/profiles?page=1&pageSize=10&sortField=name&sortDirection=asc HTTP/1.1
 Host: localhost:3000
@@ -228,6 +247,7 @@ Response: 200 OK
 ```
 
 ### Request 4: Filter by Type
+
 ```
 GET /api/profiles?page=1&pageSize=10&sortField=name&sortDirection=asc&type=DLP HTTP/1.1
 Host: localhost:3000
@@ -244,12 +264,14 @@ Response: 200 OK
 ## Key Differences from Before
 
 ### Before (Console Only)
+
 - ❌ No HTTP requests
 - ❌ Nothing in Network tab
 - ❌ Client-side processing only
 - ❌ No actual API calls
 
 ### After (Real HTTP Requests)
+
 - ✅ Real HTTP GET requests
 - ✅ Visible in Network tab
 - ✅ Server-side processing
@@ -315,12 +337,14 @@ project/
 This setup is **production-ready**:
 
 1. **Replace the API URL:**
+
    ```typescript
    // In src/api/mockApi.ts
    const API_BASE_URL = 'https://your-production-api.com/api'
    ```
 
 2. **Deploy frontend:**
+
    ```bash
    npm run build
    # Deploy dist/ folder

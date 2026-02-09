@@ -9,6 +9,7 @@
 ## What You'll See in the Console
 
 Every action will show:
+
 ```
 📡 API Call - fetchProfiles { pagination: {...}, filters: {...}, timestamp: "..." }
 ✅ API Response - Returning X items (Total: Y)
@@ -21,10 +22,12 @@ Every action will show:
 ### Test 1: Initial Page Load
 
 **What to do:**
+
 1. Navigate to `http://localhost:5174/`
 2. Look at the browser console
 
 **What you'll see:**
+
 - Initial API call with page 1, pageSize 10
 - Loading state briefly shows "Loading..." in the table
 - 10 rows displayed (items 1-10 of 16 total)
@@ -35,16 +38,19 @@ Every action will show:
 ### Test 2: Click to Next Page (Page 2)
 
 **What to do:**
+
 1. Scroll to the bottom of the table
 2. Click the "Next →" button or click "2" in pagination
 
 **What you'll see:**
+
 - New API call logged: `page: 2`
 - Loading "Loading..." appears briefly
 - 6 items displayed (rows 11-16 of 16 total)
 - Console: `📡 API Call {..., page: 2, ...}`
 
 **Expected in console:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 2, pageSize: 10, ... },
@@ -59,16 +65,19 @@ Every action will show:
 ### Test 3: Change Rows Per Page
 
 **What to do:**
+
 1. Find the "Rows per page:" dropdown
 2. Select "20"
 
 **What you'll see:**
+
 - New API call with `pageSize: 20`
 - Page resets to 1
 - All 16 items displayed on one page
 - Console: `📡 API Call {..., pageSize: 20, page: 1, ...}`
 
 **Expected in console:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 20, ... },
@@ -83,16 +92,19 @@ Every action will show:
 ### Test 4: Sort by Column
 
 **What to do:**
+
 1. Click on the "Profile Name" column header
 2. Watch the console
 
 **What you'll see:**
+
 - New API call with `sortField: "name"`, `sortDirection: "asc"`
 - Table rows re-order alphabetically
 - Items now start with "Admin User Profile"
 - Console shows sort parameters
 
 **Expected in console:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 10, sortField: "name", sortDirection: "asc" },
@@ -103,6 +115,7 @@ Every action will show:
 ```
 
 **Click the same header again (toggle direction):**
+
 - `sortDirection` changes to `"desc"`
 - Table re-orders in reverse
 
@@ -111,11 +124,13 @@ Every action will show:
 ### Test 5: Apply a Filter
 
 **What to do:**
+
 1. Find the "Type" filter dropdown
 2. Select "DLP"
 3. Watch the console
 
 **What you'll see:**
+
 - New API call with `filters: { type: "DLP" }`
 - Page resets to 1
 - Only 2 matching items shown ("DLP Profiles Configuration", "Fingerprint Rule - Document Match")
@@ -123,6 +138,7 @@ Every action will show:
 - Console shows filter parameter
 
 **Expected in console:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 10, sortField: "created", sortDirection: "desc" },
@@ -137,16 +153,19 @@ Every action will show:
 ### Test 6: Apply Multiple Filters
 
 **What to do:**
+
 1. Type = "DLP" (already selected)
 2. Find "Category" filter and select "Predefined"
 3. Watch the console
 
 **What you'll see:**
+
 - New API call with both filters: `type: "DLP"` AND `category: "Predefined"`
 - Results now show 2 items (both are DLP and Predefined)
 - Console shows both filters
 
 **Expected in console:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 10, sortField: "created", sortDirection: "desc" },
@@ -161,17 +180,20 @@ Every action will show:
 ### Test 7: Search
 
 **What to do:**
+
 1. Clear any filters (click X or select blank)
 2. Find the search box
 3. Type "Threat"
 4. Watch the console
 
 **What you'll see:**
+
 - New API call with `filters: { search: "Threat" }`
 - 2 matching items shown ("Malware Detection Profile", "Remediation Rule")
 - Console shows search parameter
 
 **Expected in console:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 1, pageSize: 10, sortField: "created", sortDirection: "desc" },
@@ -186,6 +208,7 @@ Every action will show:
 ### Test 8: Complex Scenario - Everything Together
 
 **What to do:**
+
 1. Search: Type "Profile"
 2. Category: Select "Custom"
 3. Change sort: Click "Created" header (ascending)
@@ -195,6 +218,7 @@ Every action will show:
 **What you'll see in console after each step:**
 
 **Step 1 - Search:**
+
 ```
 📡 API Call - fetchProfiles {
   filters: { search: "Profile" },
@@ -204,6 +228,7 @@ Every action will show:
 ```
 
 **Step 2 - Add Category Filter:**
+
 ```
 📡 API Call - fetchProfiles {
   filters: { search: "Profile", category: "Custom" },
@@ -213,6 +238,7 @@ Every action will show:
 ```
 
 **Step 3 - Sort:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { sortField: "created", sortDirection: "asc" },
@@ -223,6 +249,7 @@ Every action will show:
 ```
 
 **Step 4 - Page 2:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: { page: 2, sortField: "created", sortDirection: "asc" },
@@ -252,21 +279,25 @@ Every action will show:
 ## Troubleshooting
 
 **Not seeing console logs?**
+
 - Make sure you're in the Console tab (not Network, Elements, etc.)
 - Try refreshing the page with F5
 - Check that the app is running on `http://localhost:5174/`
 
 **No "Loading..." message?**
+
 - The API delay is 300ms, so it's quick
 - Try scrolling to the table while clicking to see it better
 - Network issues in DevTools (Slow 3G) will make it more visible
 
 **API not being called?**
+
 - Open DevTools console first
 - Then perform an action
 - New API logs should appear immediately
 
 **Table not updating?**
+
 - Check browser console for errors (red text)
 - Make sure you're seeing "✅ API Response" message
 - Try clicking a page button to trigger a new API call
@@ -277,15 +308,15 @@ Every action will show:
 
 Every interaction with pagination, sorting, or filters triggers a new API call:
 
-| Action | Triggers API? | Console Output |
-|--------|---------------|-----------------|
-| Click page number | ✅ Yes | `page: X` changes |
-| Click Previous/Next | ✅ Yes | `page` increases/decreases |
-| Change rows/page | ✅ Yes | `pageSize` changes, `page` resets to 1 |
-| Click column header | ✅ Yes | `sortField` changes |
-| Click header again | ✅ Yes | `sortDirection` toggles |
-| Select filter | ✅ Yes | `filters` object updated |
-| Type in search | ✅ Yes | `filters.search` added |
-| Clear filter | ✅ Yes | Filter removed from `filters` object |
+| Action              | Triggers API? | Console Output                         |
+| ------------------- | ------------- | -------------------------------------- |
+| Click page number   | ✅ Yes        | `page: X` changes                      |
+| Click Previous/Next | ✅ Yes        | `page` increases/decreases             |
+| Change rows/page    | ✅ Yes        | `pageSize` changes, `page` resets to 1 |
+| Click column header | ✅ Yes        | `sortField` changes                    |
+| Click header again  | ✅ Yes        | `sortDirection` toggles                |
+| Select filter       | ✅ Yes        | `filters` object updated               |
+| Type in search      | ✅ Yes        | `filters.search` added                 |
+| Clear filter        | ✅ Yes        | Filter removed from `filters` object   |
 
 **The mock API is working correctly when you see these console messages for every action!**

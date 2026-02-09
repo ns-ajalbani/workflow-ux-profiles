@@ -7,13 +7,16 @@ Each page change and filter change now triggers a new API call to `fetchProfiles
 ## How It Works
 
 ### 1. Initial Load
+
 When the component mounts, it automatically calls the API with:
+
 - Page: 1
 - Page Size: 10
 - Sort Field: "created"
 - Sort Direction: "desc"
 
 **Console Output:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -31,10 +34,12 @@ When the component mounts, it automatically calls the API with:
 ### 2. Pagination Changes
 
 **When you click a page number or Previous/Next button:**
+
 - The component calls the API with the new page number
 - Other parameters (pageSize, sortField, sortDirection, filters) remain the same
 
 **Example: Clicking page 2:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -52,11 +57,13 @@ When the component mounts, it automatically calls the API with:
 ### 3. Page Size Changes
 
 **When you change "Rows per page":**
+
 - The component resets to page 1
 - Calls the API with the new pageSize
 - Page is automatically reset to 1
 
 **Example: Changing to 20 rows per page:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -74,11 +81,13 @@ When the component mounts, it automatically calls the API with:
 ### 4. Sorting Changes
 
 **When you click a column header:**
+
 - The component calls the API with the new sortField
 - If clicking the same header, the direction toggles
 - Page resets to 1 on first sort change
 
 **Example: Clicking "Profile Name" header:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -94,6 +103,7 @@ When the component mounts, it automatically calls the API with:
 ```
 
 **Clicking "Profile Name" header again (toggle direction):**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -111,11 +121,13 @@ When the component mounts, it automatically calls the API with:
 ### 5. Filter Changes
 
 **When you select a filter:**
+
 - The component resets to page 1
 - Calls the API with the filter applied
 - Only the active filters are sent (undefined filters are omitted)
 
 **Example: Selecting Type = "DLP":**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -135,11 +147,13 @@ When the component mounts, it automatically calls the API with:
 ### 6. Multiple Filters
 
 **When multiple filters are applied:**
+
 - All active filters are sent to the API
 - API applies them cumulatively (AND logic)
 - Page resets to 1
 
 **Example: Type = "DLP" AND Category = "Predefined":**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -160,11 +174,13 @@ When the component mounts, it automatically calls the API with:
 ### 7. Search Changes
 
 **When you type in the search box:**
+
 - The component resets to page 1
 - Calls the API with the search term
 - Search checks: name, type, and subtype fields
 
 **Example: Searching for "Threat":**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -184,6 +200,7 @@ When the component mounts, it automatically calls the API with:
 ### 8. Complex Scenario
 
 **Example: Search + Filter + Page 2 + Sort:**
+
 ```
 📡 API Call - fetchProfiles {
   pagination: {
@@ -218,12 +235,14 @@ To verify API calls are happening, open the browser's Developer Console:
 ## Parameters Sent to API
 
 ### Pagination Parameters
+
 - `page`: Current page number (1-based)
 - `pageSize`: Rows per page (10, 20, 50, or 100)
 - `sortField`: Column to sort by (name, type, subtype, category, created)
 - `sortDirection`: "asc" or "desc"
 
 ### Filter Parameters (only if active)
+
 - `type`: Selected profile type
 - `subtype`: Selected profile subtype
 - `category`: Selected category (Predefined/Custom)
@@ -241,6 +260,7 @@ To verify API calls are happening, open the browser's Developer Console:
 ```
 
 **Example Response for Page 1:**
+
 ```
 {
   data: [
@@ -265,7 +285,7 @@ To use a real backend API, replace the `fetchProfiles()` function in `src/api/mo
 ```typescript
 export async function fetchProfiles(
   pagination: PaginationParams,
-  filters: FilterParams
+  filters: FilterParams,
 ): Promise<ApiResponse<Profile>> {
   const params = new URLSearchParams({
     page: pagination.page.toString(),
@@ -287,6 +307,7 @@ export async function fetchProfiles(
 ```
 
 Your backend would receive requests like:
+
 ```
 GET /api/profiles?page=1&pageSize=10&sortField=created&sortDirection=desc&category=Custom&search=Threat
 ```
