@@ -4,8 +4,18 @@ import cors from 'cors'
 const app = express()
 const PORT = 3000
 
-// Enable CORS for requests from Vite dev server
-app.use(cors())
+// Enable CORS for requests from Vite dev server and GitHub Pages
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173', // Vite dev server
+      'http://localhost:3000', // Local testing
+      'https://ns-ajalbani.github.io', // GitHub Pages
+      /^https:\/\/.*\.github\.io$/, // All GitHub Pages domains
+    ],
+    credentials: true,
+  })
+)
 app.use(express.json())
 
 // Mock data
