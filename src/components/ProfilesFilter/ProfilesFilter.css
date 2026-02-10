@@ -211,7 +211,34 @@
   cursor: pointer;
   width: 16px;
   height: 16px;
-  accent-color: #2b7dd9;
+  accent-color: #0066cc;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 3px;
+  background: white;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+}
+
+.filter-option input[type='checkbox']::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transition: transform 0.1s ease;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  background: white;
+}
+
+.filter-option input[type='checkbox']:checked {
+  background: #0066cc;
+  border-color: #0066cc;
+}
+
+.filter-option input[type='checkbox']:checked::before {
+  transform: scale(1);
 }
 
 .filter-option span {
