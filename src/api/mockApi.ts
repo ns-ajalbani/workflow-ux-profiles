@@ -1,4 +1,5 @@
 import type { Profile, SortField } from '../components/Profiles'
+import { MOCK_PROFILES } from '../data/mockProfiles'
 
 export interface PaginationParams {
   page: number
@@ -21,79 +22,86 @@ export interface ApiResponse<T> {
   pageSize: number
 }
 
-// API endpoint - uses environment variable or defaults to localhost
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'
-
+// Client-side pagination, sorting, and filtering
 export async function fetchProfile(id: string): Promise<Profile> {
-  console.log(`📡 API Call - GET ${API_BASE_URL}/profiles/${id}`)
+  console.log(`📡 Loading Profile - ID: ${id}`)
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/profiles/${id}`)
+  // Simulate async behavior
+  await new Promise(resolve => setTimeout(resolve, 100))
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`)
-    }
-
-    const data = await response.json()
-    console.log(`✅ API Response - Profile: ${data.name}`)
-    return data
-  } catch (error) {
-    console.error('❌ API Error:', error)
-    throw error
+  const profile = MOCK_PROFILES.find(p => p.id === id)
+  if (!profile) {
+    throw new Error(`Profile not found: ${id}`)
   }
+
+  console.log(`✅ Profile Loaded: ${profile.name}`)
+  return profile
 }
 
 export async function deleteProfile(id: string): Promise<void> {
-  console.log(`📡 API Call - DELETE ${API_BASE_URL}/profiles/${id}`)
+  console.log(`📡 Deleting Profile - ID: ${id}`)
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/profiles/${id}`, {
-      method: 'DELETE',
-    })
+  // Simulate async behavior
+  await new Promise(resolve => setTimeout(resolve, 100))
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`)
-    }
-
-    console.log(`✅ API Response - Profile deleted`)
-  } catch (error) {
-    console.error('❌ API Error:', error)
-    throw error
+  const index = MOCK_PROFILES.findIndex(p => p.id === id)
+  if (index === -1) {
+    throw new Error(`Profile not found: ${id}`)
   }
+
+  // In a real app, this would delete from server
+  console.log(`✅ Profile Deleted`)
 }
 
 export async function fetchProfiles(
   pagination: PaginationParams,
   filters: FilterParams,
 ): Promise<ApiResponse<Profile>> {
-  // Build query parameters
-  const params = new URLSearchParams({
-    page: pagination.page.toString(),
-    pageSize: pagination.pageSize.toString(),
-    sortField: pagination.sortField,
-    sortDirection: pagination.sortDirection,
+  console.log(`📡 Loading Profiles - Page: ${pagination.page}, PageSize: ${pagination.pageSize}`)
+
+  // Simulate async behavior
+  await new Promise(resolve => setTimeout(resolve, 100))
+
+  // Filter data
+  let filtered = MOCK_PROFILES.filter(profile => {
+    if (filters.type && profile.type !== filters.type) return false
+    if (filters.subtype && profile.subtype !== filters.subtype) return false
+    if (filters.category && profile.category !== filters.category) return false
+    if (
+      filters.search &&
+      !profile.name.toLowerCase().includes(filters.search.toLowerCase())
+    ) {
+      return false
+    }
+    return true
   })
 
-  // Add active filters only
-  if (filters.type) params.append('type', filters.type)
-  if (filters.subtype) params.append('subtype', filters.subtype)
-  if (filters.category) params.append('category', filters.category)
-  if (filters.search) params.append('search', filters.search)
+  // Sort data
+  const sortMultiplier = pagination.sortDirection === 'asc' ? 1 : -1
+  filtered.sort((a, b) => {
+    const aValue = a[pagination.sortField as keyof Profile]
+    const bValue = b[pagination.sortField as keyof Profile]
 
-  console.log(`📡 API Call - GET ${API_BASE_URL}/profiles?${params.toString()}`)
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/profiles?${params.toString()}`)
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`)
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * sortMultiplier
     }
+    return 0
+  })
 
-    const data = await response.json()
-    console.log(`✅ API Response - Returning ${data.data.length} items (Total: ${data.total})`)
-    return data
-  } catch (error) {
-    console.error('❌ API Error:', error)
-    throw error
+  // Paginate data
+  const total = filtered.length
+  const start = (pagination.page - 1) * pagination.pageSize
+  const end = start + pagination.pageSize
+  const data = filtered.slice(start, end)
+
+  console.log(
+    `✅ Profiles Loaded - Returning ${data.length} items (Total: ${total}, Page: ${pagination.page})`
+  )
+
+  return {
+    data,
+    total,
+    page: pagination.page,
+    pageSize: pagination.pageSize,
   }
 }
