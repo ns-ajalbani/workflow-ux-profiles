@@ -342,12 +342,12 @@ export default function ProfilesFilter({
                 </button>
               )}
 
-              {('Search'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
+              {('Search by Name'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
                 <button
                   className="filter-menu-item search-item"
                   onClick={() => handleAddFilter('search')}
                 >
-                  <span>Search</span>
+                  <span>Search by Name</span>
                   <span className="search-icon">🔍</span>
                 </button>
               )}
