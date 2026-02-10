@@ -133,6 +133,7 @@
   font-size: 14px;
   outline: none;
   background-color: #fafafa;
+  color: #333;
 }
 
 .filter-search::placeholder {
