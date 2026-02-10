@@ -303,7 +303,7 @@
 
 .filter-options::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 3px;
+  border-radius: 0;
 }
 
 .filter-options::-webkit-scrollbar-thumb:hover {
