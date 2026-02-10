@@ -31,7 +31,9 @@
       "Bash(ngrok http:*)",
       "Bash(chmod:*)",
       "Bash(source:*)",
-      "Bash(/usr/local/bin/ngrok version:*)"
+      "Bash(/usr/local/bin/ngrok version:*)",
+      "WebFetch(domain:shiny-doodle-qlemrp8.pages.github.io)",
+      "Bash(git clone:*)"
     ]
   }
 }

@@ -75,11 +75,20 @@ export async function fetchProfiles(
   pagination: PaginationParams,
   filters: FilterParams,
 ): Promise<ApiResponse<Profile>> {
-  // Filter data
+  // Parse comma-separated filter values
+  const typeValues = filters.type ? filters.type.split(',').filter(Boolean) : []
+  const subtypeValues = filters.subtype ? filters.subtype.split(',').filter(Boolean) : []
+  const categoryValues = filters.category ? filters.category.split(',').filter(Boolean) : []
+
+  // Filter data (additive: all conditions must match)
   let filtered = MOCK_PROFILES.filter(profile => {
-    if (filters.type && profile.type !== filters.type) return false
-    if (filters.subtype && profile.subtype !== filters.subtype) return false
-    if (filters.category && profile.category !== filters.category) return false
+    // Type filter: if specified, profile type must be in the list
+    if (typeValues.length > 0 && !typeValues.includes(profile.type)) return false
+    // Subtype filter: if specified, profile subtype must be in the list
+    if (subtypeValues.length > 0 && !subtypeValues.includes(profile.subtype)) return false
+    // Category filter: if specified, profile category must be in the list
+    if (categoryValues.length > 0 && !categoryValues.includes(profile.category)) return false
+    // Search filter: if specified, profile name must include the search term
     if (
       filters.search &&
       !profile.name.toLowerCase().includes(filters.search.toLowerCase())

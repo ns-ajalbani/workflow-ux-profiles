@@ -15,39 +15,40 @@ const defaultProps = {
 }
 
 describe('ProfilesFilter', () => {
-  it('renders all filter controls', () => {
+  it('renders filter controls', () => {
     render(<ProfilesFilter {...defaultProps} />)
-    expect(screen.getByLabelText('Search')).toBeInTheDocument()
-    expect(screen.getByLabelText('Type')).toBeInTheDocument()
-    expect(screen.getByLabelText('Subtype')).toBeInTheDocument()
-    expect(screen.getByLabelText('Category')).toBeInTheDocument()
+    expect(screen.getByText('Filters')).toBeInTheDocument()
+    expect(screen.getByText('Add Filter')).toBeInTheDocument()
   })
 
-  it('calls onSearchChange when typing in search', async () => {
-    const onSearchChange = vi.fn()
-    render(<ProfilesFilter {...defaultProps} onSearchChange={onSearchChange} />)
-    await userEvent.type(screen.getByLabelText('Search'), 'a')
-    expect(onSearchChange).toHaveBeenCalled()
-  })
-
-  it('disables subtype when no type selected', () => {
+  it('opens filter menu when Add Filter is clicked', async () => {
     render(<ProfilesFilter {...defaultProps} />)
-    expect(screen.getByLabelText('Subtype')).toBeDisabled()
+    await userEvent.click(screen.getByText('Add Filter'))
+    expect(screen.getByPlaceholderText('Search filter')).toBeInTheDocument()
   })
 
-  it('enables subtype when type is selected', () => {
+  it('shows filter field options in dropdown menu', async () => {
+    render(<ProfilesFilter {...defaultProps} />)
+    await userEvent.click(screen.getByText('Add Filter'))
+    expect(screen.getByText('Type')).toBeInTheDocument()
+    expect(screen.getByText('Subtype')).toBeInTheDocument()
+    expect(screen.getByText('Category')).toBeInTheDocument()
+    expect(screen.getByText('Search')).toBeInTheDocument()
+  })
+
+  it('displays active filters as tags', () => {
     render(<ProfilesFilter {...defaultProps} selectedType="DLP" />)
-    expect(screen.getByLabelText('Subtype')).not.toBeDisabled()
+    expect(screen.getByText('DLP')).toBeInTheDocument()
   })
 
   it('shows clear button when filters are active', () => {
     render(<ProfilesFilter {...defaultProps} searchTerm="test" />)
-    expect(screen.getByText('Clear Filters')).toBeInTheDocument()
+    expect(screen.getByText('Clear')).toBeInTheDocument()
   })
 
   it('hides clear button when no filters active', () => {
     render(<ProfilesFilter {...defaultProps} />)
-    expect(screen.queryByText('Clear Filters')).not.toBeInTheDocument()
+    expect(screen.queryByText('Clear')).not.toBeInTheDocument()
   })
 
   it('calls all reset handlers on clear', async () => {
@@ -58,11 +59,39 @@ describe('ProfilesFilter', () => {
       onSearchChange: vi.fn(),
       onFilterChange: vi.fn(),
     }
-    render(<ProfilesFilter {...defaultProps} {...handlers} searchTerm="test" />)
-    await userEvent.click(screen.getByText('Clear Filters'))
+    render(
+      <ProfilesFilter
+        {...defaultProps}
+        {...handlers}
+        selectedType="DLP"
+        searchTerm="test"
+      />,
+    )
+    const clearBtn = screen.getAllByText('Clear')[0]
+    await userEvent.click(clearBtn)
     expect(handlers.onTypeChange).toHaveBeenCalledWith('')
     expect(handlers.onSubtypeChange).toHaveBeenCalledWith('')
     expect(handlers.onCategoryChange).toHaveBeenCalledWith('')
     expect(handlers.onSearchChange).toHaveBeenCalledWith('')
+  })
+
+  it('removes individual filter tags', async () => {
+    const onTypeChange = vi.fn()
+    render(<ProfilesFilter {...defaultProps} selectedType="DLP" onTypeChange={onTypeChange} />)
+    const removeBtn = screen.getByRole('button', { name: /Remove/i })
+    await userEvent.click(removeBtn)
+    expect(onTypeChange).toHaveBeenCalledWith('')
+  })
+
+  it('supports multi-select filters', async () => {
+    const onTypeChange = vi.fn()
+    render(<ProfilesFilter {...defaultProps} onTypeChange={onTypeChange} />)
+    await userEvent.click(screen.getByText('Add Filter'))
+    await userEvent.click(screen.getByText('Type'))
+
+    // Select multiple types
+    const dlpOption = screen.getByLabelText('DLP')
+    await userEvent.click(dlpOption)
+    expect(onTypeChange).toHaveBeenCalledWith('DLP')
   })
 })
