@@ -265,6 +265,7 @@
   outline: none;
   background-color: white;
   box-sizing: border-box;
+  color: #333;
 }
 
 .search-input::placeholder {
