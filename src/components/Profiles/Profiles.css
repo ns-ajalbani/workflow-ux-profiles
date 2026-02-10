@@ -40,9 +40,10 @@
 
 .profiles-filters {
   display: flex;
+  flex-direction: column;
   gap: 16px;
   margin-bottom: 24px;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .filter-group {
