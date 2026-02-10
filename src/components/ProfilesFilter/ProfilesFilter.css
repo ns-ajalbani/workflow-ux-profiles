@@ -15,38 +15,38 @@
 }
 
 .add-filter-btn {
-  padding: 8px 16px;
+  padding: 10px 18px;
   background-color: white;
-  border: 1px solid #2b7dd9;
-  color: #2b7dd9;
+  border: 1px solid #c0c0c0;
+  color: #0066cc;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   transition: all 0.2s;
   white-space: nowrap;
 }
 
 .add-filter-btn:hover {
-  background-color: #f0f8ff;
+  background-color: #f9f9f9;
+  border-color: #a0a0a0;
 }
 
 .clear-btn {
-  padding: 8px 16px;
+  padding: 10px 18px;
   background-color: white;
-  border: 1px solid #d0d0d0;
-  color: #999;
+  border: none;
+  color: #0066cc;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   transition: all 0.2s;
   white-space: nowrap;
 }
 
 .clear-btn:hover {
-  background-color: #f9f9f9;
-  color: #666;
+  background-color: #f0f6ff;
 }
 
 /* Active Filter Buttons */
@@ -57,14 +57,14 @@
 }
 
 .active-filter-btn {
-  padding: 8px 16px;
+  padding: 10px 18px;
   background-color: white;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #c0c0c0;
   color: #333;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 400;
   transition: all 0.2s;
   display: flex;
   align-items: center;
@@ -73,14 +73,14 @@
 }
 
 .active-filter-btn:hover {
-  border-color: #0066cc;
-  background-color: #f0f8ff;
+  border-color: #a0a0a0;
+  background-color: #f9f9f9;
 }
 
 .dropdown-arrow {
-  font-size: 11px;
-  color: #999;
-  margin-left: 4px;
+  font-size: 13px;
+  color: #666;
+  margin-left: 6px;
 }
 
 .remove-filter-btn {
