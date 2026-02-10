@@ -85,16 +85,16 @@
 
 .remove-filter-btn {
   position: absolute;
-  right: -12px;
-  top: -12px;
-  width: 24px;
-  height: 24px;
+  right: -10px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: #d9534f;
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
