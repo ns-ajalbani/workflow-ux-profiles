@@ -135,7 +135,7 @@ export default function SidePanel({ isOpen, onClose, onNavigateToProfile, editin
 
       <div className={`side-panel ${isOpen ? 'open' : ''}`}>
         <div className="side-panel-header">
-          <h3>{editingProfile ? 'Edit Profile' : 'Create New Profile'}</h3>
+          <h2>{editingProfile ? 'Edit Profile' : 'Create New Profile'}</h2>
           <button className="close-btn" onClick={handleClose}>
             ×
           </button>
