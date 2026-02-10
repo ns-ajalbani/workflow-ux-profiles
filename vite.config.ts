@@ -5,7 +5,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/workflow-ux-profiles/' : '/',
+  base: '/workflow-ux-profiles/',
   plugins: [
     react(),
     federation({
