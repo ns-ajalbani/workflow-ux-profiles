@@ -157,7 +157,7 @@ export default function Profiles() {
     <div className="profiles-container">
       <div className="profiles-header">
         <div className="header-content">
-          <h2>Profiles</h2>
+          <h1>Profiles</h1>
           <button className="new-button" onClick={() => setIsPanelOpen(true)}>
             + New
           </button>

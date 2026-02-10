@@ -137,7 +137,7 @@
 }
 
 .filter-search::placeholder {
-  color: #999;
+  color: #666;
 }
 
 .filter-search:focus {
@@ -174,13 +174,13 @@
 }
 
 .arrow {
-  color: #999;
+  color: #666;
   font-size: 16px;
   margin-left: auto;
 }
 
 .search-icon {
-  color: #999;
+  color: #666;
   font-size: 14px;
   margin-left: auto;
 }
@@ -249,7 +249,7 @@
 
 .no-options {
   padding: 16px 12px;
-  color: #999;
+  color: #666;
   font-size: 14px;
   text-align: center;
 }
@@ -270,7 +270,7 @@
 }
 
 .search-input::placeholder {
-  color: #999;
+  color: #666;
 }
 
 .search-input:focus {
@@ -283,7 +283,7 @@
   background-color: white;
   border: none;
   border-top: 1px solid #e0e0e0;
-  color: #999;
+  color: #666;
   cursor: pointer;
   font-size: 13px;
   text-align: right;
