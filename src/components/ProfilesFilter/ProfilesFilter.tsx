@@ -126,30 +126,6 @@ export default function ProfilesFilter({
     onFilterChange()
   }
 
-  const handleRemoveFilterValue = (field: ActiveFilter['field'], value: string) => {
-    const setter = {
-      type: onTypeChange,
-      subtype: onSubtypeChange,
-      category: onCategoryChange,
-      search: onSearchChange,
-    }[field]
-
-    const currentValue = {
-      type: selectedType,
-      subtype: selectedSubtype,
-      category: selectedCategory,
-      search: searchTerm,
-    }[field]
-
-    if (field === 'search') {
-      setter('')
-    } else {
-      const values = currentValue.split(',').filter(v => v !== value)
-      setter(values.join(','))
-    }
-    onFilterChange()
-  }
-
   const handleClearAllFilters = () => {
     onTypeChange('')
     onSubtypeChange('')
@@ -176,53 +152,135 @@ export default function ProfilesFilter({
     return currentValue.split(',').includes(value)
   }
 
+  const getFilterLabel = (field: 'type' | 'subtype' | 'category' | 'search', values: string[]) => {
+    if (values.length === 0) return null
+    if (values.length === 1) return `${field} = ${values[0]}`
+    return `${field}: ${values[0]} + ${values.length - 1} more`
+  }
+
   return (
     <div className="profiles-filters">
-      <div className="filters-header">
-        <div className="filters-title">Filters</div>
-        <div className="filters-controls">
-          <button
-            className="add-filter-btn"
-            onClick={() => {
-              if (isOpen && selectedFilterField === null) {
-                setIsOpen(false)
-              } else {
-                setSelectedFilterField(null)
-                setIsOpen(!isOpen)
-              }
-            }}
-          >
-            Add Filter
-          </button>
-          {hasActiveFilters && (
-            <button className="clear-btn" onClick={handleClearAllFilters}>
-              Clear
-            </button>
-          )}
-        </div>
-      </div>
+      <div className="filters-controls">
+        <button
+          className="add-filter-btn"
+          onClick={() => {
+            if (isOpen && selectedFilterField === null) {
+              setIsOpen(false)
+            } else {
+              setSelectedFilterField(null)
+              setIsOpen(!isOpen)
+            }
+          }}
+        >
+          Add Filter
+        </button>
 
-      {/* Active Filters Display */}
-      {hasActiveFilters && (
-        <div className="active-filters">
-          {activeFilters.map(filter =>
-            filter.values.map(value => (
-              <div key={`${filter.field}-${value}`} className="filter-tag">
-                <span className="tag-label">
-                  {filter.field === 'search' ? '🔎' : ''} {value}
-                </span>
-                <button
-                  className="tag-remove"
-                  onClick={() => handleRemoveFilterValue(filter.field, value)}
-                  aria-label={`Remove ${filter.field} filter: ${value}`}
-                >
-                  ✕
-                </button>
-              </div>
-            )),
-          )}
-        </div>
-      )}
+        {/* Display active filter buttons */}
+        {selectedType && (
+          <div className="filter-button-wrapper">
+            <button
+              className="active-filter-btn"
+              onClick={() => {
+                setSelectedFilterField('type')
+                setIsOpen(true)
+              }}
+            >
+              {getFilterLabel('type', selectedType.split(',').filter(Boolean))}
+              <span className="dropdown-arrow">▼</span>
+            </button>
+            <button
+              className="remove-filter-btn"
+              onClick={() => {
+                onTypeChange('')
+                onFilterChange()
+              }}
+              title="Remove type filter"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {selectedSubtype && (
+          <div className="filter-button-wrapper">
+            <button
+              className="active-filter-btn"
+              onClick={() => {
+                setSelectedFilterField('subtype')
+                setIsOpen(true)
+              }}
+            >
+              {getFilterLabel('subtype', selectedSubtype.split(',').filter(Boolean))}
+              <span className="dropdown-arrow">▼</span>
+            </button>
+            <button
+              className="remove-filter-btn"
+              onClick={() => {
+                onSubtypeChange('')
+                onFilterChange()
+              }}
+              title="Remove subtype filter"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {selectedCategory && (
+          <div className="filter-button-wrapper">
+            <button
+              className="active-filter-btn"
+              onClick={() => {
+                setSelectedFilterField('category')
+                setIsOpen(true)
+              }}
+            >
+              {getFilterLabel('category', selectedCategory.split(',').filter(Boolean))}
+              <span className="dropdown-arrow">▼</span>
+            </button>
+            <button
+              className="remove-filter-btn"
+              onClick={() => {
+                onCategoryChange('')
+                onFilterChange()
+              }}
+              title="Remove category filter"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {searchTerm && (
+          <div className="filter-button-wrapper">
+            <button
+              className="active-filter-btn"
+              onClick={() => {
+                setSelectedFilterField('search')
+                setIsOpen(true)
+              }}
+            >
+              🔎 {searchTerm}
+            </button>
+            <button
+              className="remove-filter-btn"
+              onClick={() => {
+                onSearchChange('')
+                onFilterChange()
+              }}
+              title="Remove search filter"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        {hasActiveFilters && (
+          <button className="clear-btn" onClick={handleClearAllFilters}>
+            Clear
+          </button>
+        )}
+      </div>
 
       {/* Filter Dropdown */}
       {isOpen && (

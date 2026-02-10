@@ -7,25 +7,10 @@
   position: relative;
 }
 
-.filters-header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-}
-
-.filters-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  min-width: fit-content;
-  display: none;
-}
-
 .filters-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -64,46 +49,62 @@
   color: #666;
 }
 
-/* Active Filters Display */
-.active-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 0;
+/* Active Filter Buttons */
+.filter-button-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
-.filter-tag {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+.active-filter-btn {
+  padding: 8px 16px;
   background-color: white;
   border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  font-size: 13px;
   color: #333;
-}
-
-.tag-label {
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+  padding-right: 12px;
 }
 
-.tag-remove {
-  background: none;
+.active-filter-btn:hover {
+  border-color: #0066cc;
+  background-color: #f0f8ff;
+}
+
+.dropdown-arrow {
+  font-size: 11px;
+  color: #999;
+  margin-left: 4px;
+}
+
+.remove-filter-btn {
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #d9534f;
+  color: white;
   border: none;
   cursor: pointer;
-  color: #999;
-  font-size: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
   padding: 0;
-  margin: 0;
   line-height: 1;
-  transition: color 0.2s;
 }
 
-.tag-remove:hover {
-  color: #d9534f;
+.remove-filter-btn:hover {
+  background-color: #c9302c;
 }
 
 /* Filter Dropdown */

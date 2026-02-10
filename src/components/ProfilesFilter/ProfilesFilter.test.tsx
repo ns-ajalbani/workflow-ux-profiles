@@ -36,9 +36,9 @@ describe('ProfilesFilter', () => {
     expect(screen.getByText('Search')).toBeInTheDocument()
   })
 
-  it('displays active filters as tags', () => {
+  it('displays active filters as buttons with summary', () => {
     render(<ProfilesFilter {...defaultProps} selectedType="DLP" />)
-    expect(screen.getByText('DLP')).toBeInTheDocument()
+    expect(screen.getByText(/type = DLP/i)).toBeInTheDocument()
   })
 
   it('shows clear button when filters are active', () => {
@@ -75,10 +75,10 @@ describe('ProfilesFilter', () => {
     expect(handlers.onSearchChange).toHaveBeenCalledWith('')
   })
 
-  it('removes individual filter tags', async () => {
+  it('removes individual filter buttons', async () => {
     const onTypeChange = vi.fn()
     render(<ProfilesFilter {...defaultProps} selectedType="DLP" onTypeChange={onTypeChange} />)
-    const removeBtn = screen.getByRole('button', { name: /Remove/i })
+    const removeBtn = screen.getByRole('button', { name: /Remove type filter/i })
     await userEvent.click(removeBtn)
     expect(onTypeChange).toHaveBeenCalledWith('')
   })
