@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import { MOCK_PROFILES } from '../../data/mockProfiles'
 import './ProfilesFilter.css'
 
@@ -33,6 +33,23 @@ export default function ProfilesFilter({
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedFilterField, setSelectedFilterField] = useState<'type' | 'subtype' | 'category' | 'search' | null>(null)
+  const filterRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }
+  }, [isOpen])
 
   // Extract unique values for each filter field
   const typeOptions = useMemo(
@@ -159,7 +176,7 @@ export default function ProfilesFilter({
   }
 
   return (
-    <div className="profiles-filters">
+    <div className="profiles-filters" ref={filterRef}>
       <div className="filters-controls">
         <button
           className="add-filter-btn"
