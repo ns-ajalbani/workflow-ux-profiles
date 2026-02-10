@@ -181,14 +181,6 @@ export default function ProfilesFilter({
       <div className="filters-header">
         <div className="filters-title">Filters</div>
         <div className="filters-controls">
-          <div className="filter-button-group">
-            <button className="filter-icon-btn" title="Filter">
-              🔍
-            </button>
-            <button className="filter-icon-btn" title="Show filters">
-              📋
-            </button>
-          </div>
           <button
             className="add-filter-btn"
             onClick={() => {
