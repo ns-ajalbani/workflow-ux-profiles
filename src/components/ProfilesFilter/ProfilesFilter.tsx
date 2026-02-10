@@ -312,37 +312,45 @@ export default function ProfilesFilter({
                 onChange={e => setSearchQuery(e.target.value)}
               />
 
-              <button
-                className="filter-menu-item"
-                onClick={() => handleAddFilter('type')}
-              >
-                <span>Type</span>
-                <span className="arrow">›</span>
-              </button>
+              {('Type'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
+                <button
+                  className="filter-menu-item"
+                  onClick={() => handleAddFilter('type')}
+                >
+                  <span>Type</span>
+                  <span className="arrow">›</span>
+                </button>
+              )}
 
-              <button
-                className="filter-menu-item"
-                onClick={() => handleAddFilter('subtype')}
-              >
-                <span>Subtype</span>
-                <span className="arrow">›</span>
-              </button>
+              {('Subtype'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
+                <button
+                  className="filter-menu-item"
+                  onClick={() => handleAddFilter('subtype')}
+                >
+                  <span>Subtype</span>
+                  <span className="arrow">›</span>
+                </button>
+              )}
 
-              <button
-                className="filter-menu-item"
-                onClick={() => handleAddFilter('category')}
-              >
-                <span>Category</span>
-                <span className="arrow">›</span>
-              </button>
+              {('Category'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
+                <button
+                  className="filter-menu-item"
+                  onClick={() => handleAddFilter('category')}
+                >
+                  <span>Category</span>
+                  <span className="arrow">›</span>
+                </button>
+              )}
 
-              <button
-                className="filter-menu-item search-item"
-                onClick={() => handleAddFilter('search')}
-              >
-                <span>Search</span>
-                <span className="search-icon">🔍</span>
-              </button>
+              {('Search'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
+                <button
+                  className="filter-menu-item search-item"
+                  onClick={() => handleAddFilter('search')}
+                >
+                  <span>Search</span>
+                  <span className="search-icon">🔍</span>
+                </button>
+              )}
             </div>
           ) : selectedFilterField === 'search' ? (
             <div className="filter-options search-filter">
