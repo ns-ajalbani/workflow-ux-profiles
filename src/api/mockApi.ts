@@ -81,7 +81,7 @@ export async function fetchProfiles(
   const categoryValues = filters.category ? filters.category.split(',').filter(Boolean) : []
 
   // Filter data (additive: all conditions must match)
-  let filtered = MOCK_PROFILES.filter(profile => {
+  const filtered = MOCK_PROFILES.filter(profile => {
     // Type filter: if specified, profile type must be in the list
     if (typeValues.length > 0 && !typeValues.includes(profile.type)) return false
     // Subtype filter: if specified, profile subtype must be in the list

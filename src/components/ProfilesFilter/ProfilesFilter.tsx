@@ -358,7 +358,6 @@ export default function ProfilesFilter({
                 type="text"
                 placeholder="Enter search term"
                 className="search-input"
-                autoFocus
                 value={searchTerm}
                 onChange={e => handleTextSearch(e.target.value)}
               />

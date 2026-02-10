@@ -162,13 +162,14 @@ export default function ProfilesTable({
                   <td>{profile.createdBy}</td>
                   <td className="action-cell">
                     <div className="action-menu-wrapper">
-                      <span
+                      <button
                         className="action-menu-btn"
                         onClick={() => handleMenuToggle(profile.id)}
                         title={profile.name}
+                        aria-label={`Actions for ${profile.name}`}
                       >
                         ⋯
-                      </span>
+                      </button>
                       {openMenuId === profile.id && (
                         <div className="action-dropdown">
                           <button
