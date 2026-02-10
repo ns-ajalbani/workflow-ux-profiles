@@ -22,46 +22,59 @@ export interface ApiResponse<T> {
   pageSize: number
 }
 
+// Helper function to simulate network request with blob URL
+async function simulateNetworkRequest<T>(data: T, label: string): Promise<T> {
+  console.log(`📡 ${label}`)
+
+  // Create blob with JSON data
+  const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+
+  try {
+    // Make actual fetch call to blob URL - creates visible Network tab entry
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Network error: ${response.status}`)
+    }
+
+    const result = await response.json()
+    console.log(`✅ ${label} Complete`)
+    return result
+  } finally {
+    // Clean up blob URL
+    URL.revokeObjectURL(url)
+  }
+}
+
 // Client-side pagination, sorting, and filtering
 export async function fetchProfile(id: string): Promise<Profile> {
-  console.log(`📡 Loading Profile - ID: ${id}`)
-
-  // Simulate async behavior
-  await new Promise(resolve => setTimeout(resolve, 100))
-
   const profile = MOCK_PROFILES.find(p => p.id === id)
   if (!profile) {
     throw new Error(`Profile not found: ${id}`)
   }
 
-  console.log(`✅ Profile Loaded: ${profile.name}`)
-  return profile
+  return simulateNetworkRequest(profile, `Loading Profile - ID: ${id}`)
 }
 
 export async function deleteProfile(id: string): Promise<void> {
-  console.log(`📡 Deleting Profile - ID: ${id}`)
-
-  // Simulate async behavior
-  await new Promise(resolve => setTimeout(resolve, 100))
-
   const index = MOCK_PROFILES.findIndex(p => p.id === id)
   if (index === -1) {
     throw new Error(`Profile not found: ${id}`)
   }
 
-  // In a real app, this would delete from server
-  console.log(`✅ Profile Deleted`)
+  await simulateNetworkRequest({ success: true }, `Deleting Profile - ID: ${id}`)
 }
 
 export async function fetchProfiles(
   pagination: PaginationParams,
   filters: FilterParams,
 ): Promise<ApiResponse<Profile>> {
-  console.log(`📡 Loading Profiles - Page: ${pagination.page}, PageSize: ${pagination.pageSize}`)
-
-  // Simulate async behavior
-  await new Promise(resolve => setTimeout(resolve, 100))
-
   // Filter data
   let filtered = MOCK_PROFILES.filter(profile => {
     if (filters.type && profile.type !== filters.type) return false
@@ -94,14 +107,15 @@ export async function fetchProfiles(
   const end = start + pagination.pageSize
   const data = filtered.slice(start, end)
 
-  console.log(
-    `✅ Profiles Loaded - Returning ${data.length} items (Total: ${total}, Page: ${pagination.page})`
-  )
-
-  return {
+  const response: ApiResponse<Profile> = {
     data,
     total,
     page: pagination.page,
     pageSize: pagination.pageSize,
   }
+
+  return simulateNetworkRequest(
+    response,
+    `Loading Profiles - Page: ${pagination.page}, PageSize: ${pagination.pageSize}`
+  )
 }
