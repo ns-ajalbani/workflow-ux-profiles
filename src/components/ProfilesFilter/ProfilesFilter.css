@@ -21,7 +21,7 @@
   color: #0066cc;
   border-radius: 0;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   transition: all 0.2s;
   white-space: nowrap;
@@ -39,7 +39,7 @@
   color: #0066cc;
   border-radius: 0;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   transition: all 0.2s;
   white-space: nowrap;
@@ -63,7 +63,7 @@
   color: #333;
   border-radius: 0;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
   transition: all 0.2s;
   display: flex;
