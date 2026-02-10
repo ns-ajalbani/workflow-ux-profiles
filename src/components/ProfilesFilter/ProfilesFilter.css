@@ -212,21 +212,12 @@
   transform: translateX(2px);
 }
 
-.filter-menu-item.search-item {
-  color: #666;
-}
-
 .arrow {
   color: #666;
   font-size: 16px;
   margin-left: auto;
 }
 
-.search-icon {
-  color: #666;
-  font-size: 14px;
-  margin-left: auto;
-}
 
 /* Filter Options */
 .filter-options {

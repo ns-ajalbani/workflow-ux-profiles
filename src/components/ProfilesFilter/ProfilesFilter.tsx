@@ -347,13 +347,13 @@ export default function ProfilesFilter({
                 </button>
               )}
 
-              {('Search by Name'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
+              {('Name'.toLowerCase().includes(searchQuery.toLowerCase()) || !searchQuery) && (
                 <button
-                  className="filter-menu-item search-item"
+                  className="filter-menu-item"
                   onClick={() => handleAddFilter('search')}
                 >
-                  <span>Search by Name</span>
-                  <span className="search-icon">🔍</span>
+                  <span>Name</span>
+                  <span className="arrow">🔍</span>
                 </button>
               )}
             </div>
