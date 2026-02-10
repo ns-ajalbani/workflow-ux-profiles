@@ -23,13 +23,19 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.add-filter-btn:hover {
+.add-filter-btn:hover,
+.add-filter-btn:focus {
   background-color: #f9f9f9;
   border-color: #a0a0a0;
+  outline: none;
+}
+
+.add-filter-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
 }
 
 .clear-btn {
@@ -77,6 +83,25 @@
   background-color: #f9f9f9;
 }
 
+.active-filter-btn-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  background-color: #0066cc;
+  color: white;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 600;
+}
+
 .dropdown-arrow {
   font-size: 13px;
   color: #666;
@@ -105,6 +130,7 @@
 
 .remove-filter-btn:hover {
   background-color: #c9302c;
+  transform: scale(1.15);
 }
 
 /* Filter Dropdown */
@@ -119,6 +145,18 @@
   z-index: 1000;
   max-width: 400px;
   margin-top: 8px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .filter-menu {
@@ -165,8 +203,13 @@
   border-bottom: none;
 }
 
+.filter-menu-item {
+  transition: all 0.15s ease;
+}
+
 .filter-menu-item:hover {
   background-color: #f5f5f5;
+  transform: translateX(2px);
 }
 
 .filter-menu-item.search-item {
@@ -205,8 +248,13 @@
   transition: background-color 0.2s;
 }
 
+.filter-option {
+  transition: all 0.15s ease;
+}
+
 .filter-option:hover {
   background-color: #fafafa;
+  padding-left: 14px;
 }
 
 .filter-option input[type='checkbox'] {

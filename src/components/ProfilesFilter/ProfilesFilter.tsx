@@ -172,7 +172,12 @@ export default function ProfilesFilter({
   const getFilterLabel = (field: 'type' | 'subtype' | 'category' | 'search', values: string[]) => {
     if (values.length === 0) return null
     if (values.length === 1) return `${field} = ${values[0]}`
-    return `${field}: ${values[0]} + ${values.length - 1} more`
+    return (
+      <div className="active-filter-btn-label">
+        <span>{field}: {values[0]}</span>
+        <span className="filter-badge">+{values.length - 1}</span>
+      </div>
+    )
   }
 
   return (
