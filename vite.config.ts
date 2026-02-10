@@ -20,7 +20,7 @@ export default defineConfig({
       shared: ['react', 'react-dom', 'react-router-dom'],
     }),
     visualizer({
-      open: true,
+      open: false,
       gzipSize: true,
       brotliSize: true,
       filename: 'dist/stats.html',
