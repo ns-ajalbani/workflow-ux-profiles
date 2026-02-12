@@ -61,8 +61,25 @@
   background: #ffffff;
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.app-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.app-logo.grayscale-logo {
+  filter: grayscale(100%) brightness(0.7);
+}
+
 .app-content h2 {
-  margin: 0 0 12px 0;
+  margin: 0;
   font-size: 20px;
   color: #333;
   font-weight: 600;

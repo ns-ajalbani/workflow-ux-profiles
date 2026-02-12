@@ -33,7 +33,8 @@
       "Bash(source:*)",
       "Bash(/usr/local/bin/ngrok version:*)",
       "WebFetch(domain:shiny-doodle-qlemrp8.pages.github.io)",
-      "Bash(git clone:*)"
+      "Bash(git clone:*)",
+      "WebFetch(domain:qa.goskope.com)"
     ]
   }
 }
