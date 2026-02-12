@@ -1,5 +1,5 @@
 import profileTypesData from '../../data/profileTypes.json'
-import { TYPE_ICONS } from '../typeConfig'
+import { TYPE_ICONS, TYPE_COLORS } from '../typeConfig'
 
 const TYPE_TOOLTIPS: Record<string, string> = {
   DLP: 'Protect sensitive data from unauthorized access, sharing, or exfiltration across cloud and web channels.',
@@ -51,7 +51,10 @@ export function TypeSelectionStep({ selectedType, onSelectType }: TypeSelectionS
             title={TYPE_TOOLTIPS[type.name] || type.name}
           >
             <div className="option-header">
-              <div className="option-icon">
+              <div
+                className="option-icon"
+                style={{ color: TYPE_COLORS[type.name]?.color || '#333' }}
+              >
                 {TYPE_ICONS[type.name] || '📋'}
               </div>
               <div className="option-text">

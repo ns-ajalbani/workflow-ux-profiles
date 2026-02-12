@@ -9,6 +9,8 @@ interface TabItem {
   logo: string
 }
 
+const GRAYSCALE_APPS = ['onedrive', 'outlook', 'sharepoint', 'workplace']
+
 const TABS: TabItem[] = [
   { id: 'google-drive', label: 'Google Drive', description: 'Cloud storage and file sync service by Google', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/google.svg' },
   { id: 'gmail', label: 'Google Gmail', description: 'Email service by Google', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/gmail.svg' },
@@ -49,6 +51,11 @@ export function SaasClassic() {
               className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => handleTabClick(tab.id)}
             >
+              <img
+                src={tab.logo}
+                alt={tab.label}
+                className={`tab-icon ${GRAYSCALE_APPS.includes(tab.id) ? 'grayscale-logo' : ''}`}
+              />
               {tab.label}
             </button>
           ))}
@@ -59,7 +66,7 @@ export function SaasClassic() {
               <img
                 src={activeApp.logo}
                 alt={activeApp.label}
-                className={`app-logo ${['onedrive', 'outlook', 'sharepoint', 'workplace'].includes(activeApp.id) ? 'grayscale-logo' : ''}`}
+                className={`app-logo ${GRAYSCALE_APPS.includes(activeApp.id) ? 'grayscale-logo' : ''}`}
               />
               <h2>{activeApp.label}</h2>
             </div>
