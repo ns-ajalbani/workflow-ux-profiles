@@ -1,0 +1,36 @@
+.app-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #0066cc;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  color: #0052a3;
+}
+
+.app-detail h1 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.app-detail p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}

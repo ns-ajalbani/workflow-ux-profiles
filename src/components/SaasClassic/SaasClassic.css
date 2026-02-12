@@ -1,0 +1,76 @@
+.saas-classic-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.saas-classic-page h1 {
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0 -30px -30px -30px;
+}
+
+.tabs-list {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #d4d4d4;
+  overflow-x: auto;
+  padding: 0 30px;
+}
+
+.tab-button {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+  bottom: -1px;
+  outline: none;
+}
+
+.tab-button:hover {
+  color: #333;
+  cursor: pointer;
+}
+
+.tab-button:focus {
+  outline: none;
+}
+
+.tab-button.active {
+  color: #0066cc;
+  border-bottom-color: #0066cc;
+}
+
+.app-content {
+  padding: 30px;
+  background: #ffffff;
+}
+
+.app-content h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.app-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}

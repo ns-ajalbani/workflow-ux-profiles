@@ -16,6 +16,12 @@ export function Sidebar() {
         >
           Profiles
         </NavLink>
+        <NavLink
+          to="/saas-classic"
+          className={({ isActive }) => `menu-item ${isActive ? 'active' : ''}`}
+        >
+          SaaS (Classic)
+        </NavLink>
       </nav>
     </aside>
   )

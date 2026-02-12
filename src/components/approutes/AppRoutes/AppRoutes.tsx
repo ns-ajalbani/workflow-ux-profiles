@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Profiles from '../../Profiles'
+import { SaasClassic } from '../../SaasClassic/SaasClassic'
+import { AppDetail } from '../../SaasClassic/AppDetail'
 
 export function AppRoutes() {
   return (
@@ -15,6 +17,8 @@ export function AppRoutes() {
       />
       <Route path="/profiles" element={<Profiles />} />
       <Route path="/profiles/:editId" element={<Profiles />} />
+      <Route path="/saas-classic" element={<SaasClassic />} />
+      <Route path="/saas-classic/:appId" element={<AppDetail />} />
       <Route path="*" element={<Navigate to="/profiles" replace />} />
     </Routes>
   )
