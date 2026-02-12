@@ -34,7 +34,8 @@
       "Bash(/usr/local/bin/ngrok version:*)",
       "WebFetch(domain:shiny-doodle-qlemrp8.pages.github.io)",
       "Bash(git clone:*)",
-      "WebFetch(domain:qa.goskope.com)"
+      "WebFetch(domain:qa.goskope.com)",
+      "Bash(npm test:*)"
     ]
   }
 }

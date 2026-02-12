@@ -19,6 +19,7 @@ export function AppRoutes() {
       <Route path="/profiles/:editId" element={<Profiles />} />
       <Route path="/saas-classic" element={<SaasClassic />} />
       <Route path="/saas-classic/:appId" element={<SaasClassic />} />
+      <Route path="/saas-classic/:appId/:instanceName" element={<SaasClassic />} />
       <Route path="*" element={<Navigate to="/profiles" replace />} />
     </Routes>
   )
