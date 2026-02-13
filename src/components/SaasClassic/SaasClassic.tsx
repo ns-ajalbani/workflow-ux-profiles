@@ -32,13 +32,13 @@ function EventsAreaChart() {
         title: { text: null },
         xAxis: {
           type: 'datetime',
-          labels: { style: { fontSize: '12px', color: '#999' } },
+          labels: { enabled: false },
           lineColor: '#e8e8e8',
           tickColor: '#e8e8e8'
         },
         yAxis: {
           title: { text: null },
-          labels: { style: { fontSize: '12px', color: '#999' } },
+          labels: { enabled: false },
           gridLineColor: '#f0f0f0'
         },
         legend: { enabled: false },
@@ -49,6 +49,8 @@ function EventsAreaChart() {
           {
             type: 'area',
             name: 'Events',
+            marker: { enabled: false },
+            lineWidth: 0,
             data: [
               [Date.UTC(2024, 0, 1), 120],
               [Date.UTC(2024, 0, 2), 150],
