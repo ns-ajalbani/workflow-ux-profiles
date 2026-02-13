@@ -84,11 +84,18 @@
   background: #ffffff;
 }
 
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
 .app-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .app-logo {
@@ -338,6 +345,15 @@
   font-size: 11px;
   color: #999;
   min-width: 50px;
+}
+
+.events-chart-container {
+  background: transparent;
+  border: none;
+  height: 120px;
+  width: 83%;
+  flex-shrink: 0;
+  margin-right: -60px;
 }
 
 .ecosystem-section {

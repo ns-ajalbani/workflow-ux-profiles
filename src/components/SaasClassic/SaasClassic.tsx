@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import Highcharts from 'highcharts'
 import './SaasClassic.css'
 
 interface TabItem {
@@ -14,6 +15,65 @@ const GRAYSCALE_APPS = ['onedrive', 'outlook', 'sharepoint', 'workplace']
 
 const INSTANCES: Record<string, string[]> = {
   'google-drive': ['autoskope.com', 'netskope.com', 'test.org', 'demo.net'],
+}
+
+function EventsAreaChart() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      Highcharts.chart(containerRef.current, {
+        chart: {
+          type: 'area',
+          backgroundColor: 'transparent',
+          borderWidth: 0,
+          margin: [10, 20, 30, 40]
+        },
+        title: { text: null },
+        xAxis: {
+          type: 'datetime',
+          labels: { style: { fontSize: '12px', color: '#999' } },
+          lineColor: '#e8e8e8',
+          tickColor: '#e8e8e8'
+        },
+        yAxis: {
+          title: { text: null },
+          labels: { style: { fontSize: '12px', color: '#999' } },
+          gridLineColor: '#f0f0f0'
+        },
+        legend: { enabled: false },
+        plotOptions: {
+          area: { fillOpacity: 0.2, marker: { enabled: false } }
+        },
+        series: [
+          {
+            type: 'area',
+            name: 'Events',
+            data: [
+              [Date.UTC(2024, 0, 1), 120],
+              [Date.UTC(2024, 0, 2), 150],
+              [Date.UTC(2024, 0, 3), 180],
+              [Date.UTC(2024, 0, 4), 140],
+              [Date.UTC(2024, 0, 5), 200],
+              [Date.UTC(2024, 0, 6), 170],
+              [Date.UTC(2024, 0, 7), 210],
+              [Date.UTC(2024, 0, 8), 190],
+              [Date.UTC(2024, 0, 9), 220],
+              [Date.UTC(2024, 0, 10), 250],
+              [Date.UTC(2024, 0, 11), 230],
+              [Date.UTC(2024, 0, 12), 280],
+              [Date.UTC(2024, 0, 13), 260],
+              [Date.UTC(2024, 0, 14), 310]
+            ],
+            color: '#0066cc'
+          }
+        ],
+        credits: { enabled: false }
+      })
+    }
+  }, [])
+
+  return <div className="events-chart-container" ref={containerRef}></div>
 }
 
 const TABS: TabItem[] = [
@@ -84,17 +144,22 @@ export function SaasClassic() {
         </div>
         {activeApp && (
           <div className="app-content">
-            <div className="app-header">
-              {activeApp.logo && (
-                <img
-                  src={activeApp.logo}
-                  alt={activeApp.label}
-                  className={`app-logo ${GRAYSCALE_APPS.includes(activeApp.id) ? 'grayscale-logo' : ''}`}
-                />
-              )}
-              <h2>{activeApp.label}</h2>
+            <div className="header-section">
+              <div>
+                <div className="app-header">
+                  {activeApp.logo && (
+                    <img
+                      src={activeApp.logo}
+                      alt={activeApp.label}
+                      className={`app-logo ${GRAYSCALE_APPS.includes(activeApp.id) ? 'grayscale-logo' : ''}`}
+                    />
+                  )}
+                  <h2>{activeApp.label}</h2>
+                </div>
+                <p>{activeApp.description}</p>
+              </div>
+              <EventsAreaChart />
             </div>
-            <p>{activeApp.description}</p>
             {activeApp.hasDashboard && INSTANCES[activeApp.id] && (
               <div className="app-with-sidebar">
                 <div className="instances-sidebar">
