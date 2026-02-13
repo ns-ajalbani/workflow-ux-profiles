@@ -33,8 +33,9 @@ export function SaasClassic() {
   const navigate = useNavigate()
   const { appId, instanceName } = useParams<{ appId: string; instanceName?: string }>()
   const [activeTab, setActiveTab] = useState(appId || TABS[1].id)
-  const [activeInstance, setActiveInstance] = useState<string | undefined>(instanceName)
   const activeApp = TABS.find((tab) => tab.id === activeTab)
+  const defaultInstance = activeApp && INSTANCES[activeApp.id] ? INSTANCES[activeApp.id][0] : undefined
+  const [activeInstance, setActiveInstance] = useState<string | undefined>(instanceName || defaultInstance)
 
   useEffect(() => {
     if (appId) {
@@ -45,8 +46,12 @@ export function SaasClassic() {
   useEffect(() => {
     if (instanceName) {
       setActiveInstance(instanceName)
+    } else if (activeApp && INSTANCES[activeApp.id]) {
+      const firstInstance = INSTANCES[activeApp.id][0]
+      setActiveInstance(firstInstance)
+      navigate(`/saas-classic/${activeApp.id}/${firstInstance}`)
     }
-  }, [instanceName])
+  }, [activeApp, instanceName, navigate])
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId)
@@ -93,21 +98,22 @@ export function SaasClassic() {
             {activeApp.hasDashboard && INSTANCES[activeApp.id] && (
               <div className="app-with-sidebar">
                 <div className="instances-sidebar">
-                  <div className="sidebar-label">Instances</div>
-                  <div className="instances-list">
+                  <h3 className="sidebar-label">Instances</h3>
+                  <ul className="instances-list">
                     {INSTANCES[activeApp.id].map((instance) => (
-                      <button
-                        key={instance}
-                        className={`instance-item ${activeInstance === instance ? 'active' : ''}`}
-                        onClick={() => {
-                          setActiveInstance(instance)
-                          navigate(`/saas-classic/${activeApp.id}/${instance}`)
-                        }}
-                      >
-                        {instance}
-                      </button>
+                      <li key={instance}>
+                        <button
+                          className={`instance-item ${activeInstance === instance ? 'active' : ''}`}
+                          onClick={() => {
+                            setActiveInstance(instance)
+                            navigate(`/saas-classic/${activeApp.id}/${instance}`)
+                          }}
+                        >
+                          {instance}
+                        </button>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
                 <div className="dashboard">
                   <div className="dashboard-header">
