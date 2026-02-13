@@ -88,7 +88,6 @@
   display: flex;
   justify-content: space-between;
   gap: 30px;
-  margin-bottom: 30px;
 }
 
 .app-header {
@@ -125,7 +124,6 @@
 .app-with-sidebar {
   display: flex;
   gap: 0;
-  margin-top: 20px;
   margin-left: -30px;
   margin-right: -30px;
   margin-bottom: -30px;
@@ -350,10 +348,11 @@
 .events-chart-container {
   background: transparent;
   border: none;
-  height: 120px;
+  height: 135px;
   width: 83%;
   flex-shrink: 0;
-  margin-right: -60px;
+  margin-right: -36px;
+  margin-top: -30px;
 }
 
 .ecosystem-section {

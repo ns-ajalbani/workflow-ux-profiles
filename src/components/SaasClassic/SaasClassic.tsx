@@ -27,7 +27,7 @@ function EventsAreaChart() {
           type: 'area',
           backgroundColor: 'transparent',
           borderWidth: 0,
-          margin: [10, 20, 30, 40]
+          margin: [0, 0, 0, 0]
         },
         title: { text: null },
         xAxis: {
