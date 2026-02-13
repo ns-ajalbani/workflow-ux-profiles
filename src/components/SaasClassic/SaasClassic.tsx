@@ -33,13 +33,13 @@ function EventsAreaChart() {
         xAxis: {
           type: 'datetime',
           labels: { enabled: false },
-          lineColor: '#e8e8e8',
-          tickColor: '#e8e8e8'
+          lineWidth: 0,
+          tickWidth: 0
         },
         yAxis: {
           title: { text: null },
           labels: { enabled: false },
-          gridLineColor: '#f0f0f0'
+          gridLineWidth: 0
         },
         legend: { enabled: false },
         plotOptions: {
