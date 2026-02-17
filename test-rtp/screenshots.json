@@ -1,0 +1,24 @@
+{
+  "screenshots": [
+    {
+      "name": "thumbnail",
+      "file": "thumbnail.png",
+      "size": "15 KB",
+      "scale": "1x",
+      "format": "png",
+      "description": "Small preview thumbnail from Figma"
+    },
+    {
+      "name": "screenshot-full",
+      "file": "screenshot-full.png",
+      "size": "593 KB",
+      "scale": "2x",
+      "format": "png",
+      "description": "Full-resolution screenshot at 2x scale",
+      "exportedFrom": "Figma API"
+    }
+  ],
+  "nodeId": "5122:414555",
+  "frameName": "More Policy Groups Created, Global Labels Applied, Group List Hidden",
+  "exportedAt": "2026-02-17T13:28:00Z"
+}

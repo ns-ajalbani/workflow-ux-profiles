@@ -1,0 +1,14 @@
+{
+  "frameName": "More Policy Groups Created, Global Labels Applied, Group List Hidden",
+  "frameType": "FRAME",
+  "components": [
+    {
+      "name": "Nav - Phase I",
+      "type": "INSTANCE",
+      "componentId": "4545:57180",
+      "description": "Navigation component with Phase I variant"
+    }
+  ],
+  "description": "RTP Policy Framework design showing policy groups, global labels, and hidden group list",
+  "project": "NPLAN-4414"
+}

@@ -1,0 +1,21 @@
+{
+  "figmaFile": {
+    "name": "NG - RTP Policy Framework (NPLAN-4414)",
+    "fileId": "SPowTfzV42b2uuxY5NbKhV",
+    "lastModified": "2026-02-17T21:00:00Z",
+    "version": "2321633645467451825",
+    "editorType": "figma",
+    "linkAccess": "org_view"
+  },
+  "node": {
+    "id": "5122:414555",
+    "name": "More Policy Groups Created, Global Labels Applied, Group List Hidden",
+    "type": "FRAME",
+    "scrollBehavior": "SCROLLS"
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "designContext": "figma-design-context.json"
+  },
+  "extractedAt": "2026-02-17T13:25:00Z"
+}
