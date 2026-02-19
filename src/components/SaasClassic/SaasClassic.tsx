@@ -15,7 +15,6 @@ const GRAYSCALE_APPS = ['onedrive', 'outlook', 'sharepoint', 'workplace']
 
 const INSTANCES: Record<string, string[]> = {
   'google-drive': ['autoskope.com', 'netskope.com', 'test.org', 'demo.net'],
-  'casb-api': ['prod-api.netskope.com', 'staging-api.netskope.com', 'dev-api.netskope.com'],
 }
 
 function EventsAreaChart() {
@@ -113,7 +112,6 @@ const TABS: TabItem[] = [
   { id: 'servicenow', label: 'ServiceNow', description: 'Workflow and IT service management platform', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/servicenow.svg' },
   { id: 'slack', label: 'Slack', description: 'Team communication and messaging platform', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/slackenterprise.svg' },
   { id: 'workplace', label: 'Workplace', description: 'Enterprise social networking platform by Facebook', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/fbworkplace.svg' },
-  { id: 'casb-api', label: 'CASB API (Classic)', description: 'Cloud access security broker API interface', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/netskope.svg', hasDashboard: true },
 ]
 
 export function SaasClassic() {
