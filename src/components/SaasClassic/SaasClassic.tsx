@@ -15,6 +15,7 @@ const GRAYSCALE_APPS = ['onedrive', 'outlook', 'sharepoint', 'workplace']
 
 const INSTANCES: Record<string, string[]> = {
   'google-drive': ['autoskope.com', 'netskope.com', 'test.org', 'demo.net'],
+  'casb-api': ['prod-api.netskope.com', 'staging-api.netskope.com', 'dev-api.netskope.com'],
 }
 
 function EventsAreaChart() {
@@ -68,6 +69,29 @@ function EventsAreaChart() {
               [Date.UTC(2024, 0, 14), 310]
             ],
             color: '#0066cc'
+          },
+          {
+            type: 'area',
+            name: 'Alerts',
+            marker: { enabled: false },
+            lineWidth: 0,
+            data: [
+              [Date.UTC(2024, 0, 1), 10],
+              [Date.UTC(2024, 0, 2), 12],
+              [Date.UTC(2024, 0, 3), 15],
+              [Date.UTC(2024, 0, 4), 8],
+              [Date.UTC(2024, 0, 5), 20],
+              [Date.UTC(2024, 0, 6), 5],
+              [Date.UTC(2024, 0, 7), 25],
+              [Date.UTC(2024, 0, 8), 18],
+              [Date.UTC(2024, 0, 9), 22],
+              [Date.UTC(2024, 0, 10), 30],
+              [Date.UTC(2024, 0, 11), 12],
+              [Date.UTC(2024, 0, 12), 28],
+              [Date.UTC(2024, 0, 13), 16],
+              [Date.UTC(2024, 0, 14), 35]
+            ],
+            color: '#ff9999'
           }
         ],
         credits: { enabled: false }
@@ -89,6 +113,7 @@ const TABS: TabItem[] = [
   { id: 'servicenow', label: 'ServiceNow', description: 'Workflow and IT service management platform', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/servicenow.svg' },
   { id: 'slack', label: 'Slack', description: 'Team communication and messaging platform', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/slackenterprise.svg' },
   { id: 'workplace', label: 'Workplace', description: 'Enterprise social networking platform by Facebook', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/fbworkplace.svg' },
+  { id: 'casb-api', label: 'CASB API (Classic)', description: 'Cloud access security broker API interface', logo: 'https://qa.goskope.com/UI_Layer/img/applications/for_dark_bg/netskope.svg', hasDashboard: true },
 ]
 
 export function SaasClassic() {
