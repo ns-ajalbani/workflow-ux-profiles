@@ -16,12 +16,42 @@ interface FormFactoryProps {
 export function ProfileFormFactory({
   subtype,
   profileName,
+  selectedProfileType,
   editingProfile,
   onNavigateToProfile,
 }: FormFactoryProps): React.ReactElement | null {
   const isEditing = !!editingProfile
   const handleSubmit = () => {
     // Form submission is handled by parent
+  }
+
+  // Handle types with N/A subtype
+  if (subtype === 'N/A') {
+    switch (selectedProfileType) {
+      case 'Custom Categories':
+        return (
+          <CustomCategoriesForm
+            onNavigateToProfile={onNavigateToProfile || (() => {})}
+            onSubmit={handleSubmit}
+            profileName={profileName}
+            isEditing={isEditing}
+          />
+        )
+      case 'URL Lists':
+        return (
+          <UrlListsForm
+            onSubmit={handleSubmit}
+            profileName={profileName}
+            isEditing={isEditing}
+          />
+        )
+      default:
+        return (
+          <div style={{ padding: '20px', color: '#999' }}>
+            No form available for {selectedProfileType}
+          </div>
+        )
+    }
   }
 
   switch (subtype) {
@@ -50,23 +80,6 @@ export function ProfileFormFactory({
           isEditing={isEditing}
         />
       )
-    case 'URL Lists':
-      return (
-        <UrlListsForm
-          onSubmit={handleSubmit}
-          profileName={profileName}
-          isEditing={isEditing}
-        />
-      )
-    case 'Custom Categories':
-      return (
-        <CustomCategoriesForm
-          onNavigateToProfile={onNavigateToProfile || (() => {})}
-          onSubmit={handleSubmit}
-          profileName={profileName}
-          isEditing={isEditing}
-        />
-      )
     default:
       return (
         <div style={{ padding: '20px', color: '#999' }}>
@@ -76,8 +89,9 @@ export function ProfileFormFactory({
   }
 }
 
-export function isFormAvailable(subtype: string): boolean {
-  return ['Fingerprint Rules', 'Malware Detection', 'Destination', 'URL Lists', 'Custom Categories'].includes(
-    subtype,
-  )
+export function isFormAvailable(subtype: string, profileType?: string): boolean {
+  if (subtype === 'N/A') {
+    return ['Custom Categories', 'URL Lists'].includes(profileType || '')
+  }
+  return ['Fingerprint Rules', 'Malware Detection', 'Destination'].includes(subtype)
 }
