@@ -35,7 +35,18 @@
       "WebFetch(domain:shiny-doodle-qlemrp8.pages.github.io)",
       "Bash(git clone:*)",
       "WebFetch(domain:qa.goskope.com)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(git checkout:*)",
+      "Bash(/Users/ajalbani/dev/workflow-ux-profiles/test-rtp/metadata.json:*)",
+      "Bash(/Users/ajalbani/dev/workflow-ux-profiles/test-rtp/design-summary.json:*)",
+      "Bash(/Users/ajalbani/dev/workflow-ux-profiles/test-rtp/screenshots.json:*)",
+      "Bash(/Users/ajalbani/dev/workflow-ux-profiles/test-rtp/DESIGN_SUMMARY.md:*)",
+      "Bash(brew install:*)",
+      "Bash(echo:*)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "figma"
+  ]
 }
